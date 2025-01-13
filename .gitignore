@@ -1,0 +1,20 @@
+# Игнорируем
+/bitrix/
+/logs/
+
+# Исключаем из игнорирования
+!bitrix/components/bxmaker/
+!bitrix/components/ipol/
+!bitrix/components/webfly/
+!bitrix/components/.access.php
+
+!bitrix/php_interface/include/
+!bitrix/php_interface/lib/
+!bitrix/php_interface/s3/
+!bitrix/php_interface/subscribe/
+!bitrix/php_interface/tools/
+!bitrix/php_interface/cron_events.php
+!bitrix/php_interface/init.php
+!bitrix/php_interface/this_site_support.php
+
+!bitrix/templates/b2b/

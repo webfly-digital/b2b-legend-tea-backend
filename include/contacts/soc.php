@@ -1,0 +1,1 @@
+<a class="icon icon-vk" href="https://vk.com/legendtea"></a> <a class="icon icon-facebook" href="#"></a> <a class="icon icon-instagram" href="#"></a> <a class="icon icon-whatsapp" href="#"></a> <a class="icon icon-telegram" href="#"></a>

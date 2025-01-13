@@ -1,0 +1,39 @@
+<?
+$aMenuLinks = Array(
+	Array(
+		"Главная", 
+		"/", 
+		Array(), 
+		Array("icon"=>"icon-mobile-home"), 
+		"" 
+	),
+	Array(
+		"Каталог", 
+		"/catalog/", 
+		Array(), 
+		Array("icon"=>"icon-mobile-catalog", "nolink"=>"yes"), 
+		"" 
+	),
+	Array(
+		"Корзина", 
+		"/personal/order/make/", 
+		Array(), 
+		Array("icon"=>"icon-info"), 
+		"" 
+	),
+	Array(
+		"Избранное", 
+		"/favorites/", 
+		Array(), 
+		Array("icon"=>"icon-heart"), 
+		"" 
+	),
+	Array(
+		"Кабинет", 
+		"/personal/", 
+		Array(), 
+		Array("icon"=>"icon-profile-login"), 
+		"" 
+	)
+);
+?>
