@@ -24,6 +24,7 @@ use Bitrix\Main\Localization\Loc;
  * @var CatalogSectionComponent $component
  */
 
+var_dump(23);
 ?>
 
 <div class="left">
