@@ -1,4 +1,4 @@
-<? if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) die();
+<?php if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) die();
 
 use Bitrix\Main\Localization\Loc;
 
@@ -23,17 +23,15 @@ use Bitrix\Main\Localization\Loc;
  * @var string $labelPositionClass
  * @var CatalogSectionComponent $component
  */
-
-var_dump(23);
 ?>
 
 <div class="left">
-    <? if ($arParams['VIEW'] == 'image'): ?>
+    <?php if ($arParams['VIEW'] == 'image'): ?>
         <div class="img-holder detail-opener" data-detail-btn="<?= $itemIds['DETAIL_BTN'] ?>">
             <img src="<?= $item["DETAIL_PICTURE"]['SRC'] ?: SITE_TEMPLATE_PATH . '/assets/static/img/img-holder2.png' ?>"
                  alt="">
         </div>
-    <? endif; ?>
+    <?php endif; ?>
     <div class="product-table-cell">
         <div class="product-header">
             <div class="left">
@@ -46,21 +44,21 @@ var_dump(23);
                 <span> <?= $item['PROPERTIES']['OPISANIE_ETIKETKA_DOP']['VALUE'] ?: '-' ?> </span>
                 <div class="labels">
                     <div class="label grey-noborder"><?= $item['PROPERTIES']['CML2_ARTICLE']['VALUE'] ?></div>
-                    <? if ($item['LABEL']['ICON']): ?>
+                    <?php if ($item['LABEL']['ICON']): ?>
                         <div class="label <?= $item['LABEL']['CLASS'] ?>">
                             <div class="icon icon-<?= $item['LABEL']['ICON'] ?>"></div>
                             <span><?= $item['LABEL']['TEXT'] ?></span>
                         </div>
-                    <? endif ?>
-                    <? if (!$haveOffers): ?>
+                    <?php endif ?>
+                    <?php if (!$haveOffers): ?>
                         <div class="label grey"
                              id="<?= $itemIds['NOT_AVAILABLE_MESS'] ?>" <?= ($actualItem['CAN_BUY'] ? 'style="display: none;"' : '') ?>>
                             <div class="icon icon-truck"></div>
                             <span>Нет в наличии</span>
                         </div>
-                    <? endif ?>
+                    <?php endif ?>
                 </div>
-                <? if ($arParams['GENERATE_PDF']): ?>
+                <?php if ($arParams['GENERATE_PDF']): ?>
                     <div class="content_block">
                         <nav class="links">
                             <div class="download" data-generate-pdf-btn="<?= $itemIds['DOWNLOAD_PDF_BTN'] ?>">
@@ -68,7 +66,7 @@ var_dump(23);
                             </div>
                         </nav>
                     </div>
-                <? endif ?>
+                <?php endif ?>
             </div>
         </div>
     </div>
@@ -77,7 +75,7 @@ var_dump(23);
     </div>
 </div>
 <div class="right">
-    <?
+    <?php
     $dayDeclension = new Bitrix\Main\Grid\Declension('день', 'дня', 'дней');
     $day = $dayDeclension->get($arParams['DELIVERY_TIME']);
     if ($arParams['PRODUCT_DISPLAY_MODE'] === 'Y' && $haveOffers && !empty($item['OFFERS_PROP']))
@@ -86,7 +84,7 @@ var_dump(23);
         include 'product.php'
     ?>
 </div>
-<?
+<?php
 include 'detail.php';
 include 'js.php';
 ?>
