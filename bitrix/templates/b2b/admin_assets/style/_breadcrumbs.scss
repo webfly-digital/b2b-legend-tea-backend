@@ -1,0 +1,31 @@
+.breadcrumbs {
+	margin-bottom: 32px;
+
+	.inner {
+		margin: -8px;
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap
+	}
+
+	.item {
+		margin: 8px;
+		display: flex;
+		align-items: center;
+
+		a {
+			color: $red;
+		}
+
+		.icon {
+			@extend %icon-arrow-mini;
+			background: $grey2;
+		}
+
+		&:last-child {
+			a {
+				color: $black;
+			}
+		}
+	}
+}

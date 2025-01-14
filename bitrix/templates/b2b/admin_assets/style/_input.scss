@@ -1,0 +1,93 @@
+.custom-input {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+
+	.input-title {
+		@extend %input-title;
+	}
+
+	.tip {
+		@extend %input-tip;
+	}
+
+	input {
+		width: 100%;
+		border-radius: 4px;
+		border-width: 2px;
+		border-style: solid;
+		border-color: $light-grey2;
+		height: 53px;
+		font-weight: 400;
+		font-size: 16px;
+		line-height: 150%;
+		background: white;
+		padding: 0 24px;
+		order: 2;
+		color: $grey3;
+
+		&::placeholder {
+			color: $grey3;
+		}
+
+		&:focus {
+			color: $grey1;
+			border-color: $grey3;
+		}
+
+		&:valid {
+			&:not(:placeholder-shown):not(:focus) {
+				color: $grey1;
+				border-color: $grey3;
+			}
+		}
+
+		&:invalid {
+			&:not(:placeholder-shown):not(:focus) {
+				color: $red;
+				border-color: $red;
+
+				~ .tip,
+				~ .input-title {
+					color: $red;
+				}
+			}
+		}
+	}
+}
+
+%input-title {
+	font-weight: 600;
+	font-size: 16px;
+	line-height: 150%;
+	order: 1;
+	margin-bottom: 4px;
+
+	@media (max-width:$mobile) {
+		font-weight: 700;
+		font-size: 14px;
+		line-height: 150%;
+	}
+}
+
+%input-tip {
+	font-weight: 400;
+	font-size: 12px;
+	line-height: 150%;
+	order: 3;
+	margin-top: 4px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+textarea {
+	appearance: textfield;
+
+	&::-webkit-inner-spin-button,
+	&::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+	}
+}

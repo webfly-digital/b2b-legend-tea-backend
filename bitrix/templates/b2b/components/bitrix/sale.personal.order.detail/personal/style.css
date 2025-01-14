@@ -1,0 +1,29 @@
+.sale-order-detail-payment-options-methods-template { }
+
+div.sale-order-detail-payment-options-methods-template {
+    position: absolute;
+    left: 1000px;
+    margin: 0;
+    padding: 24px 38px 24px 38px;
+    border: 1px solid #3bc8f5;
+    opacity: 0;
+    transition: opacity .5s .3s ease;
+}
+
+/* Active statement */
+.sale-order-detail-active-event .sale-order-detail-payment-options-methods-template {
+    position: relative;
+    left: 0;
+    opacity: 1;
+}
+
+.sale-order-detail-active-event .sale-order-detail-payment-options-methods-information-block {
+    position: absolute;
+    left: 1000px;
+    opacity: 0;
+}
+
+.sale-order-detail-active-event .sale-order-detail-payment-options-methods-template.sale-paysystem-close {
+    position: absolute;
+    left: 1000px;
+}

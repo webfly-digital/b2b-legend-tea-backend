@@ -1,0 +1,94 @@
+/*===============================
+= Стилизация местоположения =
+===============================*/
+#location-row .dropdown-block{
+	border: 2px solid #c6c6c6;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	font-size:inherit;
+	border-radius: 4px;
+	height: 53px;
+}
+#location-row .bx-ui-sls-container{
+	min-height:53px;
+}
+#location-row .bx-ui-sls-fake,
+#location-row .bx-ui-sls-route{
+	font-family:inherit;
+	font-size:inherit;
+	height:50px;
+}
+#location-row .dropdown-icon{
+	top: 18px;
+}
+#location-row .bx-ui-sls-clear{
+	margin-top: 10px;
+}
+#location-row .dropdown-fade2white{
+	top: 10px;
+}
+#location-row .bx-ui-sls-pane{
+	top:50px;
+	border: 1px solid #c6c6c6;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	border-radius: 0;
+	padding:0;
+}
+#location-row .bx-ui-sls-variants .bx-ui-sls-variant:hover, #checkout-form .bx-ui-sls-variant-active{
+	background-color: #F9F9F9;
+}
+#location-row .bx-ui-sls-clear{
+	display:none !important;
+}
+#location-row .bx-ui-sls-error{
+	color: inherit;
+}
+#location-row .bx-ui-sls-error div{
+	top: 6px;
+}
+#location-row .bx-ui-sls-route,
+#location-row .bx-ui-sls-fake{
+	z-index:0;
+}
+#location-row .custom-input div.location-block-wrapper{
+	order: 2;
+}
+/*=====  Стилизация местоположения  ======*/
+#sale-profile_form .custom-input{
+	position: relative;
+}
+.validate:invalid {
+	border: 1px solid #D33836 !important;
+}
+.custom-input span.err-msg {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	width: 100%;
+	pointer-events: none;
+}
+.custom-input span.err-msg::after {
+	content: attr(data-message);
+	position: absolute;
+	top: 100%;
+	left: 0;
+	font-size: 0;
+	margin-top: 2px;
+	font-weight: 500;
+	color: #D33836;
+	text-transform: initial;
+	-webkit-transition: font-size .1s;
+	-o-transition: font-size .1s;
+	transition: font-size .1s;
+}
+.validate:invalid+div+span.err-msg::after {
+	font-size: 12px;
+}
+
+.custom-form .form-group .note.red {
+	background: #fdf0f1;
+	margin: 0;
+	padding: 16px 24px;
+	border-radius: 8px;
+}

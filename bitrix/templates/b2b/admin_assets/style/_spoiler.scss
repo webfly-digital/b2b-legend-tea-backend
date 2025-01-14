@@ -1,0 +1,44 @@
+.spoiler {
+	.content {
+		overflow: hidden;
+		transition: all 0.3s ease;
+	}
+
+	.toggler {
+		cursor: pointer;
+	}
+
+	&:not(.show) {
+		.expanded {
+			display: none;
+		}
+
+		.content {
+			max-height: 0;
+		}
+
+		.toggler {
+			.icon {
+				@extend %icon,
+				%icon-arrow-down;
+			}
+		}
+	}
+
+	&.show {
+		.initial {
+			display: none;
+		}
+
+		.content {
+			overflow: visible;
+		}
+
+		.toggler {
+			.icon {
+				@extend %icon,
+				%icon-arrow-up;
+			}
+		}
+	}
+}

@@ -1,0 +1,41 @@
+.db {
+	display: block;
+}
+
+.df {
+	display: flex;
+}
+
+.jcc {
+	justify-content: center;
+}
+
+.w-100 {
+	width: 100%;
+}
+
+.fdc {
+	flex-direction: column;
+}
+
+.aic {
+	align-items: center;
+}
+
+.d-mobile {
+	@media (min-width: $tablet) {
+		display: none !important;
+	}
+}
+
+.d-sm-desktop {
+	@media (min-width: $desktop) {
+		display: none !important;
+	}
+}
+
+.d-desktop {
+	@media (max-width: $tablet) {
+		display: none !important;
+	}
+}

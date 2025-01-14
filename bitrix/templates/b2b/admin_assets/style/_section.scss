@@ -1,0 +1,24 @@
+section {
+	+ section {
+		margin-top: 64px;
+	}
+
+	.section-title {
+		margin-bottom: 32px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	@media (max-width: $tablet) {
+		+ section {
+			margin-top: 32px;
+		}
+
+		.section-title {
+			margin-bottom: 16px;
+			flex-direction: column;
+			align-items: flex-start;
+		}
+	}
+}

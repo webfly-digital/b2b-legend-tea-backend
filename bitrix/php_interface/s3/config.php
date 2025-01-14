@@ -1,0 +1,12 @@
+<?php
+const ID_BASE_PRICE_B2B = 32;
+const ID_TYPE1_PRICE_B2B = 28;
+const ID_TYPE2_PRICE_B2B = 29;
+const ID_TYPE3_PRICE_B2B = 30;
+
+const ID_SECTION_MONTIS = 1437;// кофе монтис - весь кофе
+const ID_SECTION_COFFEE_LEGANDA_TEA = 1820;// кофе легенда чая
+const ID_SECTION_CHAY = 1445;// чай
+const ID_SECTION_ADDITION_CHAY = 1821;// добавки чай
+
+const SECTION_GENERATION_PDF = [ID_SECTION_MONTIS, ID_SECTION_CHAY, ID_SECTION_ADDITION_CHAY];

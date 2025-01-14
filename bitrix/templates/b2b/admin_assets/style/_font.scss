@@ -1,0 +1,196 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+@font-face {
+	font-family: "Inter";
+	src: url(/src/assets/static/font/Inter-ExtraBold.woff2);
+	font-weight: 800;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Inter";
+	src: url(/src/assets/static/font/Inter-SemiBold.woff2);
+	font-weight: 600;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Inter";
+	src: url(/src/assets/static/font/Inter-Medium.woff2);
+	font-weight: 500;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Inter";
+	src: url(/src/assets/static/font/Inter-Regular.woff2);
+	font-weight: 400;
+	font-display: swap;
+}
+
+h1,
+.h1,
+%h1 {
+	font-size: 38px;
+	font-weight: 800;
+	line-height: initial;
+
+	@media screen and (max-width: $mobile) {
+		font-size: 28px;
+		line-height: 130%;
+	}
+}
+
+h2,
+.h2,
+%h2 {
+	font-size: 26px;
+	font-weight: 700;
+	line-height: 150%;
+
+	@media screen and (max-width: $mobile) {
+		font-size: 20px;
+		font-weight: 800;
+	}
+}
+
+h3,
+.h3,
+%h3 {
+	font-size: 22px;
+	font-weight: 600;
+	line-height: 150%;
+
+	@media screen and (max-width: $mobile) {
+		font-size: 16px;
+		font-weight: 700;
+	}
+}
+
+h4,
+.h4,
+%h4 {
+	font-size: 16px;
+	font-weight: 900;
+	line-height: 150%;
+
+	@media screen and (max-width: $mobile) {
+		font-size: 16px;
+		font-weight: 600;
+	}
+}
+
+h5,
+.h5,
+%h5 {
+	font-size: 13px;
+	font-weight: 700;
+	line-height: 150%;
+
+	@media screen and (max-width: $mobile) {
+		font-size: 16px;
+	}
+}
+
+.subtitle,
+%subtitle {
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 150%;
+
+	@media screen and (max-width: $mobile) {
+		font-weight: 400;
+	}
+}
+
+body {
+	color: $black;
+	font-size: 12px;
+	line-height: 150%;
+}
+
+.tag,
+%tag {
+	font-size: 10px;
+	line-height: 150%;
+}
+
+.text,
+%text {
+	font-size: 14px;
+	line-height: 150%;
+
+	@media screen and (max-width: $mobile) {
+		font-size: 14px;
+	}
+}
+
+.small-text,
+%small-text {
+	font-size: 12px;
+	line-height: 150%;
+}
+
+input {
+	font-size: inherit;
+	line-height: inherit;
+	color: inherit;
+	letter-spacing: inherit;
+}
+
+a {
+	color: $black;
+}
+
+.link,
+%link {
+	font-size: 14px;
+	line-height: 150%;
+	color: $red;
+	font-weight: 600;
+	cursor: pointer;
+
+	&:hover {
+		color: $light-red;
+	}
+
+	@media screen and (max-width: $mobile) {
+		font-size: 12px;
+	}
+}
+
+.text-red {
+	color: $red !important;
+}
+
+.text-grey3 {
+	color: $grey3 !important;
+}
+
+.text-grey2 {
+	color: $grey2 !important;
+}
+
+.text-grey1 {
+	color: $grey1 !important;
+}
+
+.text-underline {
+	text-decoration: underline;
+}
+
+.text-bold {
+	font-weight: 700;
+}
+
+.text-center {
+	text-align: center;
+}
+
+.text-right {
+	text-align: right;
+}
+
+.text-white {
+	color: #fff !important;
+}

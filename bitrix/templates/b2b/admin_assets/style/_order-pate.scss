@@ -1,0 +1,66 @@
+.order-plate-group {
+	.order-plate {
+		+ .order-plate {
+			margin-top: 12px;
+		}
+	}
+}
+
+.order-plate {
+	padding: 24px;
+	display: flex;
+	align-items: center;
+	border-radius: 4px;
+
+	h4 {
+		margin-bottom: 4px;
+	}
+
+	.left {
+		width: 100%;
+	}
+
+	.right {
+		flex-shrink: 0;
+	}
+
+	&.neutral {
+		border: 2px solid $light-grey2;
+		color: $grey2;
+
+		h4 {
+			color: $black;
+		}
+	}
+
+	&.green {
+		color: $grey1;
+		background: $light-green;
+
+		h4 {
+			color: $dark-green;
+		}
+	}
+
+	&.red {
+		color: $grey1;
+		background: $pink;
+
+		h4 {
+			color: $light-red;
+		}
+	}
+
+	@media (max-width: $tablet) {
+		flex-direction: column;
+		align-items: stretch;
+
+		h4 {
+			margin-bottom: 8px;
+		}
+
+		.right {
+			margin-top: 16px;
+		}
+	}
+}

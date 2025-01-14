@@ -1,0 +1,832 @@
+.icon,
+%icon {
+	width: 24px;
+	height: 24px;
+	display: flex;
+	transition: all 0.3s ease;
+	border: none;
+	mask-size: contain;
+	mask-repeat: no-repeat;
+	mask-position: center;
+	background: $black;
+	flex-shrink: 0;
+
+	svg,
+	img {
+		width: 100%;
+		height: 100%;
+		object-fit: contain;
+	}
+
+	&-like {
+		mask-image: url(/src/assets/static/img/icon/like.svg)
+	}
+
+	&-docMini {
+		mask-image: url(/src/assets/static/img/icon/doc-mini.svg)
+	}
+
+	&-packageLabel {
+		mask-image: url(/src/assets/static/img/icon/package-label.svg)
+	}
+
+	&-news {
+		mask-image: url(/src/assets/static/img/icon/news.svg);
+	}
+
+	&-arrow-down {
+		mask-image: url(/src/assets/static/img/icon/arrow-down.svg);
+	}
+
+	&-arrow-left {
+		mask-image: url(/src/assets/static/img/icon/arrow-left.svg);
+	}
+
+	&-arrow-right {
+		mask-image: url(/src/assets/static/img/icon/arrow-right.svg);
+	}
+
+	&-arrow-up {
+		mask-image: url(/src/assets/static/img/icon/arrow-up.svg);
+	}
+
+	&-box {
+		mask-image: url(/src/assets/static/img/icon/box.svg);
+	}
+
+	&-cacao {
+		mask-image: url(/src/assets/static/img/icon/cacao.svg);
+	}
+
+	&-cake {
+		mask-image: url(/src/assets/static/img/icon/cake.svg);
+	}
+
+	&-cart {
+		mask-image: url(/src/assets/static/img/icon/cart.svg);
+	}
+
+	&-new {
+		mask-image: url(/src/assets/static/img/icon/new.svg);
+	}
+
+	&-fire {
+		mask-image: url(/src/assets/static/img/icon/fire.svg);
+	}
+
+	&-castle-profile {
+		mask-image: url(/src/assets/static/img/icon/castle-profile.svg);
+	}
+
+	&-check {
+		mask-image: url(/src/assets/static/img/icon/check.svg);
+	}
+
+	&-coffee {
+		mask-image: url(/src/assets/static/img/icon/coffee.svg);
+	}
+
+	&-cross {
+		mask-image: url(/src/assets/static/img/icon/cross.svg);
+	}
+
+	&-cup {
+		mask-image: url(/src/assets/static/img/icon/cup.svg);
+	}
+
+	&-download {
+		mask-image: url(/src/assets/static/img/icon/download.svg);
+	}
+
+	&-email {
+		mask-image: url(/src/assets/static/img/icon/email.svg);
+	}
+
+	&-equip {
+		mask-image: url(/src/assets/static/img/icon/equip.svg);
+	}
+
+	&-facebook {
+		mask-image: url(/src/assets/static/img/icon/facebook.svg);
+	}
+
+	&-filter {
+		mask-image: url(/src/assets/static/img/icon/filter.svg);
+	}
+
+	&-gift {
+		mask-image: url(/src/assets/static/img/icon/gift.svg);
+	}
+
+	&-heart-filled {
+		mask-image: url(/src/assets/static/img/icon/heart-filled.svg);
+	}
+
+	&-heart {
+		mask-image: url(/src/assets/static/img/icon/heart.svg);
+	}
+
+	&-arrow-mini {
+		mask-image: url(/src/assets/static/img/icon/icon-arrow-mini.svg);
+	}
+
+	&-info {
+		mask-image: url(/src/assets/static/img/icon/info.svg);
+	}
+
+	&-instagram {
+		mask-image: url(/src/assets/static/img/icon/instagram.svg);
+	}
+
+	&-kettle {
+		mask-image: url(/src/assets/static/img/icon/kettle.svg);
+	}
+
+	&-location {
+		mask-image: url(/src/assets/static/img/icon/location.svg);
+	}
+
+	&-minus {
+		mask-image: url(/src/assets/static/img/icon/minus.svg);
+	}
+
+	&-mobile-catalog {
+		mask-image: url(/src/assets/static/img/icon/mobile-catalog.svg);
+	}
+
+	&-mobile-home {
+		mask-image: url(/src/assets/static/img/icon/mobile-home.svg);
+	}
+
+	&-package {
+		mask-image: url(/src/assets/static/img/icon/package.svg);
+	}
+
+	&-phone {
+		mask-image: url(/src/assets/static/img/icon/phone.svg);
+	}
+
+	&-plus {
+		mask-image: url(/src/assets/static/img/icon/plus.svg);
+	}
+
+	&-profile-login {
+		mask-image: url(/src/assets/static/img/icon/profile-login.svg);
+	}
+
+	&-search {
+		mask-image: url(/src/assets/static/img/icon/search.svg);
+	}
+
+	&-syrops {
+		mask-image: url(/src/assets/static/img/icon/syrops.svg);
+	}
+
+	&-tea {
+		mask-image: url(/src/assets/static/img/icon/tea.svg);
+	}
+
+	&-time {
+		mask-image: url(/src/assets/static/img/icon/time.svg);
+	}
+
+	&-thumb-up {
+		mask-image: url(/src/assets/static/img/icon/thumb-up.svg);
+	}
+
+	&-truck {
+		mask-image: url(/src/assets/static/img/icon/truck.svg);
+	}
+
+	&-visibility-off {
+		mask-image: url(/src/assets/static/img/icon/visibility-off.svg);
+	}
+
+	&-visibility {
+		mask-image: url(/src/assets/static/img/icon/visibility.svg);
+	}
+
+	&-vk {
+		mask-image: url(/src/assets/static/img/icon/vk.svg);
+	}
+
+	&-whatsapp {
+		mask-image: url(/src/assets/static/img/icon/whatsapp.svg);
+	}
+
+	&-telegram {
+		mask-image: url(/src/assets/static/img/icon/telegram.svg);
+	}
+
+	// новые иконки бургер меню
+	&-new-tea {
+		mask-image: url(/src/assets/static/img/icon/new-tea.svg);
+	}
+	
+	&-new-green-coffee {
+		mask-image: url(/src/assets/static/img/icon/new-green-coffee.svg);
+	}
+
+	&-new-coffee-montis {
+		mask-image: url(/src/assets/static/img/icon/new-coffee-montis.svg);
+	}
+
+	&-new-coffee-legend-tea {
+		mask-image: url(/src/assets/static/img/icon/new-coffee-legend-tea.svg);
+	}
+
+	&-new-hot-chocolate {
+		mask-image: url(/src/assets/static/img/icon/new-hot-chocolate.svg);
+	}
+
+	&-new-candies {
+		mask-image: url(/src/assets/static/img/icon/new-candies.svg);
+	}
+
+	&-new-cocoa-butter {
+		mask-image: url(/src/assets/static/img/icon/new-cocoa-butter.svg);
+	}
+
+	&-new-cocoa-powder {
+		mask-image: url(/src/assets/static/img/icon/new-cocoa-powder.svg);
+	}
+
+	&-new-sugar {
+		mask-image: url(/src/assets/static/img/icon/new-sugar.svg);
+	}
+
+	&-new-cream {
+		mask-image: url(/src/assets/static/img/icon/new-cream.svg);
+	}
+
+	&-new-syrups {
+		mask-image: url(/src/assets/static/img/icon/new-syrups.svg);
+	}
+
+	&-new-package {
+		mask-image: url(/src/assets/static/img/icon/new-package.svg);
+	}
+
+	&-new-tableware {
+		mask-image: url(/src/assets/static/img/icon/new-tableware.svg);
+	}
+
+	&-new-chocolate {
+		mask-image: url(/src/assets/static/img/icon/new-chocolate.svg);
+	}
+
+	&-new-news {
+		mask-image: url(/src/assets/static/img/icon/new-news.svg);
+	}
+
+	&-new-candles {
+		mask-image: url(/src/assets/static/img/icon/new-candles.svg);
+	}
+
+	
+	// новое меню - иконки
+	&-white-tea {
+		position: relative;
+		mask-image: url(/src/assets/static/img/icon/white-tea.svg);
+
+		&:before {
+			content: "";
+			width: 3.3px;
+			height: 3.3px;
+			display: block;
+			border-radius: 50%;
+
+			position: absolute;
+			top: 1px;
+			left: 1px;
+			background-color: #fff;
+
+			transition: all .2s ease;
+		}
+	}
+
+	&-gaba {
+		mask-image: url(/src/assets/static/img/icon/gaba.svg);
+	}
+
+	&-dahunpao {
+		mask-image: url(/src/assets/static/img/icon/dahunpao.svg);
+	}
+
+	&-yellow-tea {
+		position: relative;
+		mask-image: url(/src/assets/static/img/icon/yellow-tea.svg);
+
+		&:before {
+			content: "";
+			width: 3.3px;
+			height: 3.3px;
+			display: block;
+			border-radius: 50%;
+
+			position: absolute;
+			top: 1px;
+			left: 1px;
+			background-color: #FFDC60;
+
+			transition: all .2s ease;
+		}
+	}
+
+	&-green-tea {
+		position: relative;
+		mask-image: url(/src/assets/static/img/icon/green-tea.svg);
+
+		&:before {
+			content: "";
+			width: 3.3px;
+			height: 3.3px;
+			display: block;
+			border-radius: 50%;
+
+			position: absolute;
+			top: 1px;
+			left: 1px;
+			background-color: #7DC900;
+
+			transition: all .2s ease;
+		}
+	}
+
+	&-green-tea-2 {
+		position: relative;
+		mask-image: url(/src/assets/static/img/icon/green-tea-2.svg);
+
+		&:before {
+			content: "";
+			width: 3.3px;
+			height: 3.3px;
+			display: block;
+			border-radius: 50%;
+
+			position: absolute;
+			top: 1px;
+			left: 1px;
+			background-color: #7DC900;
+
+			transition: all .2s ease;
+		}
+	}
+
+	&-ivan-tea {
+		mask-image: url(/src/assets/static/img/icon/ivan-tea.svg);
+	}
+
+	&-red-tea {
+		position: relative;
+		mask-image: url(/src/assets/static/img/icon/red-tea.svg);
+
+		&:before {
+			content: "";
+			width: 3.3px;
+			height: 3.3px;
+			display: block;
+			border-radius: 50%;
+
+			position: absolute;
+			top: 1px;
+			left: 1px;
+			background-color: #E84600;
+
+			transition: all .2s ease;
+		}
+	}
+
+	&-mate {
+		mask-image: url(/src/assets/static/img/icon/mate.svg);
+	}
+
+	&-matcha {
+		mask-image: url(/src/assets/static/img/icon/matcha.svg);
+	}
+
+	&-puer {
+		mask-image: url(/src/assets/static/img/icon/puer.svg);
+	}
+
+	&-rooibos {
+		mask-image: url(/src/assets/static/img/icon/rooibos.svg);
+	}
+
+	&-link-tea {
+		mask-image: url(/src/assets/static/img/icon/link-tea.svg);
+	}
+
+	&-caucasus-tea {
+		mask-image: url(/src/assets/static/img/icon/caucasus-tea.svg);
+	}
+
+	&-elbrus {
+		mask-image: url(/src/assets/static/img/icon/elbrus.svg);
+	}
+
+	&-grass-tea {
+		mask-image: url(/src/assets/static/img/icon/grass-tea.svg);
+	}
+
+	&-ulun {
+		mask-image: url(/src/assets/static/img/icon/ulun.svg);
+	}
+
+	&-ulun-2 {
+		mask-image: url(/src/assets/static/img/icon/ulun-2.svg);
+	}
+
+	&-fruit-berry-tea {
+		mask-image: url(/src/assets/static/img/icon/fruit-berry-tea.svg);
+	}
+
+	&-tea-drink {
+		mask-image: url(/src/assets/static/img/icon/tea-drink.svg);
+	}
+
+	&-black-green-tea {
+		position: relative;
+		mask-image: url(/src/assets/static/img/icon/black-green-tea.svg);
+
+		&:before {
+			content: "";
+			width: 1.65px;
+			height: 3.3px;
+			display: block;
+			border-top-left-radius: 5px;
+			border-bottom-left-radius: 5px;
+
+			position: absolute;
+			top: 1px;
+			left: 1px;
+			background-color: #C16B1C;
+
+			transition: all .2s ease;
+		}
+
+		&:after {
+			content: "";
+			width: 1.65px;
+			height: 3.3px;
+			display: block;
+			border-top-right-radius: 5px;
+			border-bottom-right-radius: 5px;
+
+			position: absolute;
+			top: 1px;
+			left: 2.65px;
+			background-color: #7DC900;
+
+			transition: all .2s ease;
+		}
+	}
+
+	&-black-tea {
+		position: relative;
+		mask-image: url(/src/assets/static/img/icon/black-tea.svg);
+
+		&:before {
+			content: "";
+			width: 3.3px;
+			height: 3.3px;
+			display: block;
+			border-radius: 50%;
+
+			position: absolute;
+			top: 1px;
+			left: 1px;
+			background-color: #C16B1C;
+
+			transition: all .2s ease;
+		}
+	}
+
+	&-black-tea-2 {
+		position: relative;
+		mask-image: url(/src/assets/static/img/icon/black-tea-2.svg);
+
+		&:before {
+			content: "";
+			width: 3.3px;
+			height: 3.3px;
+			display: block;
+			border-radius: 50%;
+
+			position: absolute;
+			top: 1px;
+			left: 1px;
+			background-color: #C16B1C;
+
+			transition: all .2s ease;
+		}
+	}
+
+	&-elite-china-tea {
+		mask-image: url(/src/assets/static/img/icon/elite-china-tea.svg);
+	}
+
+	&-accessories-1 {
+		mask-image: url(/src/assets/static/img/icon/accessories-1.svg);
+	}
+
+	&-accessories-2 {
+		mask-image: url(/src/assets/static/img/icon/accessories-2.svg);
+	}
+
+	&-accessories-3 {
+		mask-image: url(/src/assets/static/img/icon/accessories-3.svg);
+	}
+
+	&-accessories-4 {
+		mask-image: url(/src/assets/static/img/icon/accessories-4.svg);
+	}
+
+	&-accessories-5 {
+		mask-image: url(/src/assets/static/img/icon/accessories-5.svg);
+	}
+
+	&-accessories-6 {
+		mask-image: url(/src/assets/static/img/icon/accessories-6.svg);
+	}
+
+	&-accessories-7 {
+		mask-image: url(/src/assets/static/img/icon/accessories-7.svg);
+	}
+
+	&-accessories-8 {
+		mask-image: url(/src/assets/static/img/icon/accessories-8.svg);
+	}
+
+	&-accessories-9 {
+		mask-image: url(/src/assets/static/img/icon/accessories-9.svg);
+	}
+
+	&-accessories-10 {
+		mask-image: url(/src/assets/static/img/icon/accessories-10.svg);
+	}
+
+	&-accessories-11 {
+		mask-image: url(/src/assets/static/img/icon/accessories-11.svg);
+	}
+
+	&-accessories-12 {
+		mask-image: url(/src/assets/static/img/icon/accessories-12.svg);
+	}
+
+	&-accessories-13 {
+		mask-image: url(/src/assets/static/img/icon/accessories-13.svg);
+	}
+
+	&-accessories-14 {
+		mask-image: url(/src/assets/static/img/icon/accessories-14.svg);
+	}
+
+	&-accessories-15 {
+		mask-image: url(/src/assets/static/img/icon/accessories-15.svg);
+	}
+
+	&-accessories-16 {
+		mask-image: url(/src/assets/static/img/icon/accessories-16.svg);
+	}
+
+	&-accessories-17 {
+		mask-image: url(/src/assets/static/img/icon/accessories-17.svg);
+	}
+
+	&-accessories-18 {
+		mask-image: url(/src/assets/static/img/icon/accessories-18.svg);
+	}
+
+	&-accessories-19 {
+		mask-image: url(/src/assets/static/img/icon/accessories-19.svg);
+	}
+
+	&-accessories-20 {
+		mask-image: url(/src/assets/static/img/icon/accessories-20.svg);
+	}
+
+	&-chocolate {
+		mask-image: url(/src/assets/static/img/icon/chocolate.svg);
+	}
+
+	&-package-main {
+		mask-image: url(/src/assets/static/img/icon/package-main.svg);
+	}
+
+	&-package-1 {
+		mask-image: url(/src/assets/static/img/icon/package-1.svg);
+	}
+
+	&-package-2 {
+		mask-image: url(/src/assets/static/img/icon/package-2.svg);
+	}
+
+	&-package-3 {
+		mask-image: url(/src/assets/static/img/icon/package-3.svg);
+	}
+
+	&-package-4 {
+		mask-image: url(/src/assets/static/img/icon/package-4.svg);
+	}
+
+	&-package-5 {
+		mask-image: url(/src/assets/static/img/icon/package-5.svg);
+	}
+
+	&-package-6 {
+		mask-image: url(/src/assets/static/img/icon/package-6.svg);
+	}
+
+	&-package-7 {
+		mask-image: url(/src/assets/static/img/icon/package-7.svg);
+	}
+
+	&-ingredients-1 {
+		mask-image: url(/src/assets/static/img/icon/ingredients-1.svg);
+	}
+
+	&-ingredients-2 {
+		mask-image: url(/src/assets/static/img/icon/ingredients-2.svg);
+	}
+
+	&-ingredients-3 {
+		mask-image: url(/src/assets/static/img/icon/ingredients-3.svg);
+	}
+
+	&-ingredients-4 {
+		mask-image: url(/src/assets/static/img/icon/ingredients-4.svg);
+	}
+
+	&-ingredients-5 {
+		mask-image: url(/src/assets/static/img/icon/ingredients-5.svg);
+	}
+
+	&-new-ingredients {
+		mask-image: url(/src/assets/static/img/icon/new-ingredients.svg);
+	}
+
+	&-green-coffee-main {
+		mask-image: url(/src/assets/static/img/icon/green-coffee-main.svg);
+	}
+
+	&-coffee-main {
+		mask-image: url(/src/assets/static/img/icon/coffee-main.svg);
+	}
+
+	&-coffee-2 {
+		mask-image: url(/src/assets/static/img/icon/coffee-2.svg);
+	}
+
+	&-coffee-4 {
+		mask-image: url(/src/assets/static/img/icon/coffee-4.svg);
+	}
+
+	&-syrops-1 {
+		mask-image: url(/src/assets/static/img/icon/syrops-1.svg);
+	}
+
+	&-syrops-2 {
+		mask-image: url(/src/assets/static/img/icon/syrops-2.svg);
+	}
+
+	&-syrops-3 {
+		mask-image: url(/src/assets/static/img/icon/syrops-3.svg);
+	}
+
+	&-syrops-4 {
+		mask-image: url(/src/assets/static/img/icon/syrops-4.svg);
+	}
+
+	&-syrops-5 {
+		mask-image: url(/src/assets/static/img/icon/syrops-5.svg);
+	}
+
+	&-arabica {
+		mask-image: url(/src/assets/static/img/icon/arabica.svg);
+	}
+
+	&-robusta {
+		mask-image: url(/src/assets/static/img/icon/robusta.svg);
+	}
+
+	&-coffee-aromat {
+		mask-image: url(/src/assets/static/img/icon/coffee-aromat.svg);
+	}
+
+	&-coffee-aromat-legend {
+		mask-image: url(/src/assets/static/img/icon/coffee-aromat-legend.svg);
+	}
+
+	&-blend {
+		mask-image: url(/src/assets/static/img/icon/blend.svg);
+	}
+
+	&-blend-legend {
+		mask-image: url(/src/assets/static/img/icon/blend-legend.svg);
+	}
+
+	&-monosort-legend {
+		mask-image: url(/src/assets/static/img/icon/monosort-legend.svg);
+	}
+
+	&-premium {
+		mask-image: url(/src/assets/static/img/icon/premium.svg);
+	}
+
+	// от 27.02.24
+	&-new-hot-drinks {
+		mask-image: url(/src/assets/static/img/icon/new-hot-drinks.svg);
+	}
+
+	&-new-candies-big {
+		mask-image: url(/src/assets/static/img/icon/new-candies-big.svg);
+	}
+
+	&-new-tea-blend {
+		mask-image: url(/src/assets/static/img/icon/new-tea-blend.svg);
+	}
+
+	&-new-puerh-flat-shu {
+		position: relative;
+		mask-image: url(/src/assets/static/img/icon/new-puerh-flat-shu.svg);
+
+		&:before {
+			content: "";
+			width: 3.3px;
+			height: 3.3px;
+			display: block;
+			border-radius: 50%;
+
+			position: absolute;
+			top: 1px;
+			left: 1px;
+			background-color: #C16B1C;
+
+			transition: all .2s ease;
+		}
+	}
+
+	&-new-puerh-flat-sheng {
+		position: relative;
+		mask-image: url(/src/assets/static/img/icon/new-puerh-flat-sheng.svg);
+
+		&:before {
+			content: "";
+			width: 3.3px;
+			height: 3.3px;
+			display: block;
+			border-radius: 50%;
+
+			position: absolute;
+			top: 1px;
+			left: 1px;
+			background-color: #CCFF60;
+
+			transition: all .2s ease;
+		}
+	}
+
+	&-new-puerh-resin {
+		mask-image: url(/src/assets/static/img/icon/new-puerh-resin.svg);
+	}
+
+	&-new-puerh-to-cha {
+		mask-image: url(/src/assets/static/img/icon/new-puerh-to-cha.svg);
+	}
+
+	&-new-puerh-loose {
+		mask-image: url(/src/assets/static/img/icon/new-puerh-loose.svg);
+	}
+
+	&-new-tea-white-flat {
+		position: relative;
+		mask-image: url(/src/assets/static/img/icon/new-tea-white-flat.svg);
+
+		&:before {
+			content: "";
+			width: 3.3px;
+			height: 3.3px;
+			display: block;
+			border-radius: 50%;
+
+			position: absolute;
+			top: 1px;
+			left: 1px;
+			background-color: white;
+
+			transition: all .2s ease;
+		}
+	}
+}
+
+.hot {
+	.icon {
+		background: #D33836;
+	}
+	
+	span {
+		color: #D33836;
+	}
+	
+}

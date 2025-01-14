@@ -1,0 +1,65 @@
+input[type="checkbox"].custom-checkbox {
+	width: 20px;
+	height: 20px;
+	position: relative;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	-moz-appearance: initial;
+	-webkit-appearance: initial;
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	flex-shrink: 0;
+
+	&::before {
+		visibility: visible;
+		position: absolute;
+		content: "";
+		width: 100%;
+		height: 100%;
+		border: 3px solid $light-grey2;
+		background: white;
+		border-radius: 2px;
+		transition: all 0.3s ease;
+	}
+
+	&::after {
+		visibility: visible;
+		position: absolute;
+		content: "";
+		opacity: 0;
+		transition: all 0.3s ease;
+		border: 3px solid transparent;
+		@extend %icon,
+		.icon-check;
+		background: white;
+		width: 100%;
+		height: 100%;
+		border-radius: 4px;
+	}
+
+	&:hover {
+		&::before {
+			border: 3px solid $black;
+		}
+	}
+
+	&:checked {
+		&::before {
+			border: 3px solid $red;
+			background: $red;
+		}
+
+		&::after {
+			opacity: 1;
+		}
+	}
+
+	// &:disabled {
+	// 	opacity: 0.4;
+
+	// 	& + span {
+	// 		opacity: 0.4;
+	// 	}
+	// }
+}

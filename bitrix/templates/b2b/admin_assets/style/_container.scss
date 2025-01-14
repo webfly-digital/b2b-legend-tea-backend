@@ -1,0 +1,112 @@
+.container {
+	margin: auto;
+	max-width: 2000px;
+	width: 100%;
+	padding: 0 40px;
+
+	@media (max-width:$tablet) {
+		max-width: initial;
+		padding: 0 88px;
+	}
+
+	@media (max-width:$mobile) {
+		padding: 0 50px;
+	}
+}
+
+.container-size {
+	&-0 {
+		box-sizing: content-box;
+		width: 100%;
+		max-width: 370px;
+		margin-left: auto;
+		margin-right: auto;
+		padding: 0 40px;
+
+		@media (max-width: $tablet) {
+			padding: 0 16px;
+			box-sizing: border-box;
+		}
+	}
+
+	&-1 {
+		box-sizing: content-box;
+		width: 100%;
+		max-width: 640px;
+		margin-left: auto;
+		margin-right: auto;
+		padding: 0 40px;
+
+		@media (max-width: $tablet) {
+			padding: 0 16px;
+			box-sizing: border-box;
+		}
+	}
+
+	&-2 {
+		box-sizing: content-box;
+		width: 100%;
+		max-width: 760px;
+		margin-left: auto;
+		margin-right: auto;
+		padding: 0 40px;
+
+		@media (max-width: $tablet) {
+			padding: 0 16px;
+			box-sizing: border-box;
+		}
+	}
+
+	&-3 {
+		box-sizing: content-box;
+		width: 100%;
+		max-width: 1152px;
+		margin-left: auto;
+		margin-right: auto;
+		padding: 0 40px;
+
+		@media (max-width: $tablet) {
+			padding: 0 16px;
+			box-sizing: border-box;
+		}
+	}
+}
+
+[class^=container-size] {
+	[class^=container-size] {
+		padding: 0;
+	}
+}
+
+@function proportion($width, $height) {
+	@return math.div($height, $width) * 100%;
+}
+
+@mixin absolute-container($width, $height) {
+	display: block;
+	position: relative;
+	width: 100%;
+	padding-bottom: proportion($width : $width, $height : $height);
+	mask-image: radial-gradient(#000, #000);
+	overflow: hidden;
+
+	.content {
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 100%;
+		width: 100%;
+
+		> iframe {
+			width: 100% !important;
+			height: 100% !important;
+		}
+
+		> img {
+			height: 100%;
+			width: 100%;
+			object-fit: cover;
+			object-position: center;
+		}
+	}
+}

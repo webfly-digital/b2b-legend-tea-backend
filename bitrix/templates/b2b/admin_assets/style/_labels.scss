@@ -1,0 +1,111 @@
+.labels {
+	display: flex;
+	flex-wrap: wrap;
+	margin: 0 -4px -4px -4px;
+
+
+}
+
+.labels .label,
+.left .label {
+	margin: 4px;
+	border-radius: 999px;
+	font-size: 12px;
+	padding: 4px 8px;
+	color: $grey1;
+	font-weight: 500;
+	line-height: 150%;
+	display: flex;
+	align-items: center;
+
+	.icon {
+		margin-right: 4px;
+		width: 16px;
+		height: 16px;
+		display: block;
+		object-fit: contain;
+	}
+
+	&.grey-noborder {
+		background: $light-grey2;
+	}
+
+	&.green {
+		background: $light-green;
+		border: 1px solid $dark-green;
+
+		span {
+			color: $dark-green;
+		}
+
+		.icon {
+			background: $dark-green;
+		}
+	}
+
+	&.red {
+		background: $pink;
+		border: 1px solid $red;
+
+		span {
+			color: $red;
+		}
+
+		.icon {
+			background: $red;
+		}
+	}
+
+	&.yellow {
+		background: $yellow;
+		border: 1px solid $dark-yellow;
+
+		span {
+			color: $dark-yellow;
+		}
+
+		.icon {
+			background: $dark-yellow;
+		}
+	}
+
+	&.grey {
+		background: $light-grey3;
+		border: 1px solid $grey2;
+
+		span {
+			color: $grey2;
+		}
+
+		.icon {
+			background: $grey2;
+		}
+	}
+
+	&.dark {
+		background: #F9F9F9;
+		border: 1px solid #4F4F4F;
+
+		position: relative;
+		cursor: pointer;
+
+		span {
+			color: #4F4F4F;
+		}
+
+		.icon {
+			background: #4F4F4F;
+		}
+
+		&:hover {
+			.out-of-stock-content {
+				opacity: 1;
+			}
+		}
+
+		.out-of-stock-content {
+			left: 0;
+			transform: translateX(0);
+		}
+	}
+}

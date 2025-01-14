@@ -1,0 +1,99 @@
+.dropzone {
+	input {
+		visibility: hidden;
+		width: 0;
+		height: 0;
+		position: absolute;
+	}
+
+	.inner {
+		height: 152px;
+		border: 2px dashed $grey2;
+		width: 100%;
+		border-radius: 8px;
+		background: $light-grey3;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+
+		.placeholder {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			.icon {
+				background: $grey2;
+				margin-right: 8px;
+			}
+
+			span {
+				@extend %link;
+				color: $grey2;
+			}
+
+			.hidden {
+				display: none;
+			}
+
+			&:not(.hidden) {
+				+ .img {
+					display: none;
+				}
+			}
+		}
+
+		.img {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			position: relative;
+
+			img {
+				width: 64px;
+				height: 64px;
+				object-fit: cover;
+			}
+
+			&::after {
+				content: "";
+				@extend %icon,
+				%icon-cross;
+				position: absolute;
+				background: transparent;
+			}
+
+			&:hover {
+				&::after {
+					background: $black;
+				}
+			}
+		}
+	}
+
+	@media (max-width: $tablet) {
+		.inner {
+			height: initial;
+			background: initial;
+			border: none;
+
+			.img {
+				&::after {
+					background: $black;
+					top: 0;
+					right: 0;
+				}
+			}
+
+			.placeholder {
+				span {
+					color: $red;
+				}
+
+				.icon {
+					background: $red;
+				}
+			}
+		}
+	}
+}

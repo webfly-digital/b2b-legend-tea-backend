@@ -1,0 +1,155 @@
+.companies-page {
+	h1 {
+		margin-bottom: 32px;
+	}
+
+	.note-plate {
+		margin-bottom: 32px;
+	}
+
+	.companies-table {
+		&-header {
+			display: grid;
+			grid-template-columns: 288fr 205fr 221fr 284fr;
+
+			.cell {
+				&:last-child {
+					text-align: right;
+				}
+
+				padding: 12px;
+				color: $grey4;
+			}
+		}
+
+		&-body {
+			border-bottom: 2px solid $grey3;
+			border-top: 2px solid $grey3;
+
+			.companies-table-row {
+				border-bottom: 2px solid $light-grey2;
+				display: grid;
+				grid-template-columns: 288fr 205fr 221fr 284fr;
+
+				&:last-child {
+					border-bottom: none;
+				}
+
+				.companies-table-cell {
+					padding: 12px;
+
+					&:first-child {
+						@extend %subtitle;
+					}
+
+					&:last-child {
+						text-align: right;
+					}
+
+					a {
+						+ a {
+							margin-left: 12px;
+						}
+					}
+				}
+			}
+		}
+
+		&-footer {
+			margin-top: 24px;
+		}
+	}
+
+	@media (max-width: $tablet) {
+		h1 {
+			margin-bottom: 8px;
+		}
+
+		.note-plate {
+			margin-bottom: 24px;
+		}
+
+		.companies-table {
+			&-header {
+				display: none;
+			}
+
+			&-body {
+				border-bottom: none;
+				border-top: none;
+
+				.companies-table-row {
+					grid-template-columns: 1fr;
+
+					&:last-child {
+						border-bottom: 2px solid $light-grey2;
+					}
+
+					.companies-table-cell {
+						padding: 8px;
+
+						&:last-child {
+							text-align: left;
+						}
+
+						&:nth-child(2),
+						&:nth-child(3) {
+							display: flex;
+							flex-direction: column;
+
+							span {
+								&:nth-child(1) {
+									color: $grey2;
+								}
+
+								&:nth-child(2) {}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+.form-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 24px;
+
+	@media (max-width: $tablet) {
+		grid-template-columns: 1fr;
+	}
+
+	input {
+		border-color: rgba(198, 198, 198, 1);
+	}
+
+	.notify-yellow {
+		height: 53px;
+		padding-inline: 24px;
+
+		display: flex;
+		align-items: center;
+
+		background-color: rgba(254, 250, 234, 1);
+		border-radius: 4px;
+		color: rgba(198, 136, 17, 1);
+
+		margin-top: auto;
+	}
+
+	.edo {
+		select {
+			transition: all .2s ease;
+
+			&[disabled] {
+				max-height: 0;
+				
+	
+				border-width: 0;
+				margin-top: 0;
+			}
+		}
+	}
+}

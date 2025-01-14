@@ -1,0 +1,147 @@
+.filter {
+	&-toggler {
+		--color: #{$red};
+		width: 100%;
+		height: 56px;
+		border: 1px solid var(--color);
+		padding: 16px 24px;
+		color: var(--color);
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		@extend %subtitle;
+		border-radius: 4px;
+		cursor: pointer;
+
+		.icon {
+			background: var(--color);
+			margin-right: 8px;
+		}
+
+		&:hover {
+			--color:#{$light-red};
+		}
+
+		&.active {
+			position: relative;
+
+			&::after {
+				content: "";
+				position: absolute;
+				top: 0;
+				right: 0;
+				width: 12px;
+				height: 12px;
+				border-radius: 50%;
+				background: var(--color);
+				transform: translate(50%, -50%);
+			}
+		}
+	}
+
+	&-content {
+		position: fixed;
+		top: 0;
+		right: 0;
+		background: white;
+		width: 450px;
+		padding: 24px;
+		bottom: 0;
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+		border-left: 2px solid $light-grey2;
+		transition: all ease .3s;
+		transform: translateX(100%);
+		z-index: 1000;
+
+		&.show {
+			transform: translateX(0);
+			box-shadow: -8px 0 8px 0 rgba(34, 60, 80, 0.2);
+		}
+
+		.header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 32px;
+
+			.close {
+				cursor: pointer;
+			}
+		}
+
+		.body {
+			height: 100%;
+			margin-bottom: 32px;
+
+			.group {
+				overflow: hidden;
+
+				+ .group {
+					margin-top: 32px;
+				}
+
+				.title {
+					margin-bottom: 16px;
+					color: $grey2;
+				}
+
+				.checks {
+					display: flex;
+					flex-wrap: wrap;
+					margin: -4px;
+
+					.check {
+						margin: 4px;
+
+						input {
+							visibility: hidden;
+							width: 0;
+							height: 0;
+							position: absolute;
+
+							&:checked,
+							&:hover {
+								+ .visible {
+									background: $grey1;
+									color: white;
+								}
+							}
+						}
+
+						.visible {
+							cursor: pointer;
+							padding: 12px 16px;
+							background: $light-grey3;
+							display: flex;
+							justify-content: center;
+							align-items: center;
+							@extend .small-text;
+							border-radius: 4px;
+							color: $grey4;
+							@include transition-base;
+							user-select: none;
+						}
+					}
+				}
+			}
+		}
+
+		.footer {
+			margin-top: auto;
+			padding-top: 16px;
+			border-top: 1px solid $light-grey2;
+		}
+	}
+
+	@media (max-width: $tablet) {
+		&-content {
+			top: 0;
+			width: 100%;
+			height: initial;
+			bottom: 0;
+			padding-right: 12px;
+		}
+	}
+}

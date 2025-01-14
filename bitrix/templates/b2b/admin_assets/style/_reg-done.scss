@@ -1,0 +1,57 @@
+.reg-done {
+	height: auto;
+	display: flex;
+	align-items: center;
+	margin-top: auto;
+	margin-bottom: auto;
+
+	[class^="container"] {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+
+		h1 {
+			text-align: center;
+		}
+
+		img {
+			width: 100px;
+			height: auto;
+			margin-bottom: 32px;
+		}
+
+		.subtitle {
+			color: $grey2;
+			text-align: center;
+		}
+
+		[class^="button"] {
+			margin-top: 24px;
+		}
+	}
+
+	@media (max-width: $tablet) {
+		flex: 1;
+		align-items: stretch;
+
+		[class^="container"] {
+			height: auto;
+			flex: 1;
+
+			img {
+				display: none;
+			}
+
+			h1 {
+				text-align: left;
+				margin-bottom: 16px;
+			}
+
+			.subtitle {
+				color: $grey2;
+				text-align: left;
+				margin-bottom: auto;
+			}
+		}
+	}
+}

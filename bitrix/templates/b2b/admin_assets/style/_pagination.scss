@@ -1,0 +1,36 @@
+.pagination {
+	overflow: hidden;
+
+	.content {
+		justify-content: center;
+		align-items: center;
+		display: flex;
+		margin: -4px;
+	}
+
+	.item {
+		cursor: pointer;
+		margin: 4px;
+
+		.num {
+			border-radius: 2px;
+			width: 32px;
+			height: 32px;
+			background: $light-grey2;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			@extend %subtitle;
+			color: $grey3;
+
+			&.active {
+				color: white;
+				background: $red;
+			}
+		}
+
+		.arrow {
+			background: $grey1;
+		}
+	}
+}

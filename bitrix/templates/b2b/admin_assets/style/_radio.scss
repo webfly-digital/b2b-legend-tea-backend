@@ -1,0 +1,50 @@
+input[type="radio"].custom-radio {
+	width: 20px;
+	height: 20px;
+	visibility: hidden;
+	position: relative;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	appearance: none;
+	user-select: none;
+
+	&::before {
+		visibility: visible;
+		position: absolute;
+		content: "";
+		width: 100%;
+		height: 100%;
+		border: 2px solid $light-grey2;
+		border-radius: 50%;
+		transition: all 0.3s ease;
+	}
+
+	&::after {
+		visibility: visible;
+		position: absolute;
+		content: "";
+		border-radius: 50%;
+		transition: all 0.3s ease;
+		border: 5px solid $red;
+		opacity: 0;
+	}
+
+	&:hover {
+		&::before {
+			border: 2px solid $black;
+		}
+	}
+
+	&:checked {
+		&::before {
+			border: 2px solid $red;
+		}
+
+		&::after {
+			opacity: 1;
+		}
+	}
+}

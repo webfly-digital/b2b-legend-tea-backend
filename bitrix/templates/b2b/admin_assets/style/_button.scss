@@ -1,0 +1,118 @@
+[class^=button-] {
+	user-select: none;
+}
+
+.button-fixed,
+%button-fixed {
+	--color: white;
+	width: 270px;
+	flex-shrink: 0;
+	padding: 14px 24px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: 600;
+	font-size: 16px;
+	line-height: 150%;
+	background: $red;
+	border: none;
+	color: var(--color);
+	border-radius: 4px;
+	@include transition-base;
+	cursor: pointer;
+	outline: none;
+
+	.icon {
+		background: var(--color);
+		margin-left: auto;
+	}
+
+	&:hover {
+		background: $light-red;
+	}
+
+	&:disabled,
+	&.disabled {
+		background: $grey3;
+	}
+
+	&.transparent {
+		background: transparent;
+		color: $grey4;
+
+		&:hover {
+			color: $grey2;
+		}
+
+		&:disabled {
+			color: $grey3;
+		}
+	}
+
+	@media (max-width:$mobile) {
+		width: 100%;
+	}
+}
+
+.button-variable,
+%button-variable {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 14px 24px;
+	border: none;
+	flex-shrink: 0;
+	border-radius: 4px;
+	@include transition-base;
+	cursor: pointer;
+	color: white;
+	background: transparent;
+	@extend %subtitle;
+	outline: none;
+
+	&:not(.bordered) {
+		background: $red;
+
+		&:hover {
+			background: $light-red;
+		}
+
+		&:disabled,
+		&.disabled {
+			background: $grey3;
+		}
+	}
+
+	&.bordered {
+		padding: 12px 22px;
+		border: 2px solid $grey1;
+		color: $grey1;
+
+		&:hover {
+			border: 2px solid $grey2;
+			color: $grey2;
+		}
+
+		&:disabled,
+		&.disabled {
+			border: 2px solid $grey3;
+			color: $grey3;
+		}
+	}
+
+	@media (max-width:$tablet) {
+		width: 100%;
+		padding: 12px;
+
+		&.bordered {
+			border: none !important;
+		}
+	}
+}
+
+.button-full,
+%button-full {
+	@extend %button-fixed;
+	width: 100%;
+}
+

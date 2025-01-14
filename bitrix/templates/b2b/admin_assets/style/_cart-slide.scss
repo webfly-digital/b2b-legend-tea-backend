@@ -1,0 +1,162 @@
+.cart {
+	padding: 24px;
+	background: white;
+	overflow: hidden auto;
+	width: 320px;
+	right: 0;
+	position: fixed;
+	top: (var(--header-height, 146px));
+	padding-bottom: calc(var(--footer-height, 72px) + 16px);
+	bottom: 0;
+	z-index: 1000;
+	display: flex;
+	align-items: stretch;
+	flex-direction: column;
+	border-left: 2px solid $light-grey2;
+	@include transition-base;
+	opacity: 0;
+	transform: translateX(100%);
+
+	&.desktop-visible {
+		@media (min-width: $tablet) {
+			opacity: 1;
+			transform: translateX(0);
+		}
+
+		@media (max-width: $desktop) {
+			width: 280px;
+		}
+	}
+
+	&.show {
+		opacity: 1;
+		transform: translateX(0);
+	}
+
+	.cart-header {
+		margin-bottom: 32px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+
+		.clear {
+			cursor: pointer;
+			color: $red;
+			@include transition-base;
+
+			&:hover {
+				color: $light-red;
+			}
+		}
+	}
+
+	.cart-body {
+		.prices {
+			.item {
+				color: $grey2;
+				display: flex;
+
+				+ .item {
+					margin-top: 12px;
+				}
+
+				.name {
+					display: flex;
+					width: 100%;
+					white-space: nowrap;
+
+					&::after {
+						content: "";
+						width: 100%;
+						border-bottom: 1px dotted $grey2;
+						margin: 0 8px;
+					}
+				}
+
+				.price {
+					white-space: nowrap;
+				}
+			}
+		}
+
+		.note {
+			margin: 32px 0;
+			padding: 16px 24px;
+			background: $light-grey3;
+			border-radius: 8px;
+			@extend %small-text;
+
+			&.red {
+				background: #FDF0F1;
+
+				// @media (max-width: )
+			}
+		}
+
+		.user-choose {
+			input {
+				border: 2px solid #f2f2f2;
+				outline: 0;
+				border-radius: 4px;
+
+				padding: 0 16px;
+				height: 40px;
+
+				font-size: 14px;
+				line-height: 40px;
+				color: #4f4f4f;
+			}
+
+			.listUsers {
+				display: flex;
+				flex-direction: column;
+				box-shadow: 0px 4px 8px 0px rgba(34, 60, 80, 0.2);
+
+				>div {
+					position: relative;
+					padding: 8px 12px;
+					font-size: 12px;
+					line-height: 1.5;
+
+					background-color: #fff;
+
+					transition: all .2s ease;
+
+					&:hover {
+						background-color: #f2f2f2;
+					}
+
+					&:not(:last-child):after {
+						content: "";
+						position: absolute;
+						left: 50%;
+						bottom: 0;
+						transform: translateX(-50%);
+
+						width: 90%;
+						height: 1px;
+						background-color: #f2f2f2;
+					}
+				}
+			}
+		}
+	}
+
+	.cart-footer {
+		border-top: 2px solid $light-grey2;
+		padding-top: 16px;
+
+		.total {
+			@extend %h4;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			text-transform: uppercase;
+			margin-bottom: 12px;
+		}
+	}
+
+	@media (max-width: $tablet) {
+		width: 100%;
+	}
+}

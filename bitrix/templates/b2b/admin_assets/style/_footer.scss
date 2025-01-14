@@ -1,0 +1,26 @@
+footer {
+	margin-top: 96px;
+	display: flex;
+	justify-content: space-between;
+	padding: 24px 64px;
+	position: relative;
+	z-index: 999;
+	background: white;
+	border-top: 2px solid $light-grey2;
+
+	.item {
+		@extend %subtitle;
+
+		+ .item {
+			margin-left: 64px;
+		}
+	}
+
+	.left {
+		display: flex;
+	}
+
+	@media (max-width: $tablet) {
+		display: none;
+	}
+}

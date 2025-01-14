@@ -1,0 +1,283 @@
+.checkout-page {
+	height: auto;
+
+	.checkout-container {
+		@extend %three-cols-table-container;
+	}
+
+	.mid {
+		h1 {
+			margin-bottom: 48px;
+		}
+
+		h2 {
+			margin-bottom: 32px;
+		}
+
+		>h3 {
+			margin-top: 48px;
+			margin-bottom: 24px;
+		}
+	}
+
+	.delivery-cards {
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr;
+		gap: 24px;
+
+		.card {
+			cursor: pointer;
+			min-height: 130px;
+
+			.russianpost_link button {
+				background-color: unset !important;
+				border-color: unset !important;
+				border: none !important;
+				color: #e35553 !important;
+				text-decoration: underline;
+				font-weight: 600;
+				font-size: 12px;
+				cursor: pointer;
+
+				&:hover {
+					text-decoration: none;
+				}
+			}
+
+			input {
+				visibility: hidden;
+				position: absolute;
+				z-index: -999;
+			}
+
+			input {
+				&:checked {
+					&+.visual {
+						border: 2px solid $light-red;
+					}
+				}
+			}
+
+			.visual {
+				@include transition-base;
+				border: 2px solid $grey3;
+				padding: 24px;
+				border-radius: 4px;
+				height: 100%;
+				display: flex;
+				flex-direction: column;
+				align-items: stretch;
+
+				.top {
+					display: flex;
+					color: $grey1;
+					margin-bottom: auto;
+
+					.logo {
+						width: 48px;
+						height: 48px;
+						align-self: center;
+						margin-right: 12px;
+						flex-shrink: 0;
+
+						img {
+							width: 100%;
+							height: 100%;
+							object-fit: contain;
+							object-position: center;
+						}
+					}
+
+					.info {
+						white-space: nowrap;
+
+						@media (max-width: $mobile) {
+							white-space: normal;
+						}
+					}
+
+					.price {
+						@extend %h4;
+						margin-left: auto;
+						white-space: nowrap;
+					}
+				}
+
+				.bottom {
+					margin-top: 12px;
+					text-align: right;
+
+					.check-map {
+						color: #e35553;
+						text-decoration: underline;
+						font-weight: 600;
+
+						&:hover {
+							text-decoration: none;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	// .product-table {
+	// 	&.type6 {
+	// 		.product-header {
+	// 			.labels {
+	// 				.label {
+	// 					&:not(.grey-noborder) {
+	// 						display: none;
+	// 					}
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+	// }
+
+	@media (max-width: $desktop) {
+		.checkout-container {
+			grid-template-columns: 0 1fr 300px !important;
+
+			>.right {
+				transform: none !important;
+				box-shadow: none !important;
+			}
+		}
+	}
+
+	@media (max-width: $tablet) {
+		.checkout-container {
+			grid-template-columns: 1fr !important;
+
+			> {
+
+				.right,
+				.left {
+					display: none !important;
+				}
+			}
+		}
+
+		.delivery-cards {
+			grid-template-columns: 1fr;
+
+			.card {
+				.visual {
+					padding: 12px;
+
+					.bot {
+						display: none;
+					}
+				}
+			}
+		}
+	}
+}
+
+.popup_map {
+	position: relative;
+	display: flex;
+	gap: 12px;
+
+	position: fixed;
+	left: 50%;
+	top: 50%;
+
+	transform: translate(-50%, -50%);
+
+	&.disable {
+		display: none;
+	}
+
+	@media (max-width: $tablet) {
+		display: block;
+
+		left: 50%;
+		top: 0;
+
+		transform: translateX(-50%);
+
+		&--close {
+			position: absolute;
+			top: 50px;
+			right: 10px;
+		}
+	}
+
+	z-index: 1001;
+
+	&--close {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 40px;
+		height: 40px;
+
+		background-color: #fff;
+		border-radius: 10px;
+		box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.3);
+
+		cursor: pointer;
+
+		&:hover {
+			.icon {
+				background: #d33836;
+			}
+		}
+
+		.icon {
+			background: #979797;
+			transition: background .1s linear;
+		}
+	}
+
+	&--map {
+		display: block;
+
+		width: 830px;
+		height: 650px;
+
+		border-radius: 10px;
+		background-color: aliceblue;
+		overflow: hidden;
+
+		@media (max-width: $tablet) {
+			width: 100vw;
+			height: calc(100vh - 72px);
+			top: 0;
+
+			iframe {
+				width: 100vw;
+				height: 100vh;
+			}
+		}
+
+		* {
+			outline: none;
+			border: none;
+		}
+	}
+}
+
+.shade {
+	position: fixed;
+	display: block;
+	z-index: 1000;
+	width: 100vw;
+	height: 100vh;
+
+	background-color: rgba(0, 0, 0, 0.4);
+
+	&.disable {
+		display: none;
+	}
+
+	@media (max-width: $tablet) {
+		display: none !important;
+	}
+}
+
+.map-widget-layout-view__top-controlstrols {
+	display: none !important;
+}

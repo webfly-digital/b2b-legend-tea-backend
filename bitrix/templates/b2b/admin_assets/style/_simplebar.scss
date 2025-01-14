@@ -1,0 +1,63 @@
+@import "simplebar/dist/simplebar";
+
+[data-simplebar] {
+	overflow: auto;
+
+	&.simplebar-type1 {
+		padding-right: 16px;
+
+		&::-webkit-scrollbar {
+			display: none;
+		}
+
+		.simplebar-track {
+			transition: initial;
+			width: 8px;
+			background: $light-grey2;
+			border-radius: 4px;
+
+			.simplebar-scrollbar {
+				transition: initial;
+
+				&.simplebar-visible {
+					&::before {
+						border-radius: 4px;
+						opacity: 1;
+						right: initial;
+						left: 0;
+						width: 100%;
+						background: $grey1;
+					}
+				}
+			}
+		}
+	}
+
+	&.simplebar-type2 {
+		.simplebar-track {
+			transition: initial;
+			height: 8px;
+			background: $light-grey2;
+
+			.simplebar-scrollbar {
+				transition: initial;
+				height: 100%;
+				top: 0;
+
+				&.simplebar-visible {
+					&::before {
+						opacity: 1;
+						background: $grey1;
+					}
+				}
+			}
+		}
+
+		@media (max-width: $mobile) {
+			.simplebar-track {
+				transform: translateY(-3px);
+				margin-left: 16px;
+			}
+		}
+	}
+}
