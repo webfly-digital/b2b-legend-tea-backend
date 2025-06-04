@@ -7,6 +7,11 @@ use Bitrix\Catalog\PriceTable;
 use Spipu\Html2Pdf\Locale;
 
 
+const ID_BASE_PRICE_B2B = 32;
+const ID_TYPE1_PRICE_B2B = 28;
+const ID_TYPE2_PRICE_B2B = 29;
+const ID_TYPE3_PRICE_B2B = 30;
+
 class GeneratePriceList
 {
     protected $iblockId = 93;
@@ -131,25 +136,25 @@ class GeneratePriceList
 
 
         $this->html = '<main class="price_list first">
-            <img src="https://legend-tea.ru/bitrix/templates/b2b/assets/static/img/price_list/price_list_1.png">
+            <img src="https://shop.legend-tea.ru/bitrix/templates/b2b/assets/static/img/price_list/price_list_1.png">
 			<div class="title_block">
 				<p class="title">Прайс-лист</p>
 				<p class="subtitle">Оптовые поставки кофе и чая собственного производства и с собственного склада</p>
 			</div>
 
 			<div class="connect">
-				<img src="https://legend-tea.ru/bitrix/templates/b2b/assets/static/img/price_list/qr.svg" alt="">
+				<img src="https://shop.legend-tea.ru/bitrix/templates/b2b/assets/static/img/price_list/qr.svg" alt="">
 				<ul>
 					<li>
-						<img src="https://legend-tea.ru/bitrix/templates/b2b/assets/static/img/price_list/call.svg" alt="">
+						<img src="https://shop.legend-tea.ru/bitrix/templates/b2b/assets/static/img/price_list/call.svg" alt="">
 						<p>8 (800) 700-78-87</p>
 					</li>
 					<li>
-						<img src="https://legend-tea.ru/bitrix/templates/b2b/assets/static/img/price_list/mail.svg" alt="">
+						<img src="https://shop.legend-tea.ru/bitrix/templates/b2b/assets/static/img/price_list/mail.svg" alt="">
 						<p>zakaz@legend-tea.ru</p>
 					</li>
 					<li>
-						<img src="https://legend-tea.ru/bitrix/templates/b2b/assets/static/img/price_list/web.svg" alt="">
+						<img src="https://shop.legend-tea.ru/bitrix/templates/b2b/assets/static/img/price_list/web.svg" alt="">
 						<p>legend-tea.ru</p>
 					</li>
 				</ul>
@@ -180,7 +185,7 @@ class GeneratePriceList
             data.append('file', file);
             data.append('static', 'Y');
          
-            fetch('https://legend-tea.ru/ajax/upload-price-list.php', {
+            fetch('https://shop.legend-tea.ru/ajax/upload-price-list.php', {
                 method: 'POST',
                 body: data,
             })
@@ -297,7 +302,7 @@ class GeneratePriceList
                     [
                         "LOGIC" => "OR",
                         ['PRODUCT.TYPE' => 3,],
-                        ['PRODUCT.TYPE' => 1, 'PRICE.CATALOG_GROUP_ID' => [24, 25, 26, 27]],
+                        ['PRODUCT.TYPE' => 1, 'PRICE.CATALOG_GROUP_ID' =>[ID_BASE_PRICE_B2B, ID_TYPE1_PRICE_B2B, ID_TYPE2_PRICE_B2B, ID_TYPE3_PRICE_B2B],],
                     ]
                 ),
                 'runtime' => array(
@@ -334,7 +339,7 @@ class GeneratePriceList
                         'IBLOCK_ID' => [93, 94],
                         'ACTIVE' => 'Y',
                         'PARENT_ELEMENT.ACTIVE' => 'Y',
-                        'PRICE.CATALOG_GROUP_ID' => [24, 25, 26, 27],
+                        'PRICE.CATALOG_GROUP_ID' => [ID_BASE_PRICE_B2B, ID_TYPE1_PRICE_B2B, ID_TYPE2_PRICE_B2B, ID_TYPE3_PRICE_B2B],
                         [
                             'LOGIC' => 'OR',
                             [
@@ -392,10 +397,10 @@ class GeneratePriceList
                         $arProp[$item['ID']]['IBLOCK_SECTION_ID'] = $item["IBLOCK_SECTION_ID"];
                         $arProp[$item['ID']]['TYPE'] = $item["TYPE"];
 
-                        if ($item['GROUP_ID'] == '24') $arProp[$item['ID']]['PRICE_1'] = $item["PRICE_VALUE"] . ' ₽';
-                        if ($item['GROUP_ID'] == '25') $arProp[$item['ID']]['PRICE_2'] = $item["PRICE_VALUE"] . ' ₽';
-                        if ($item['GROUP_ID'] == '26') $arProp[$item['ID']]['PRICE_3'] = $item["PRICE_VALUE"] . ' ₽';
-                        if ($item['GROUP_ID'] == '27') $arProp[$item['ID']]['PRICE_4'] = $item["PRICE_VALUE"] . ' ₽';
+                        if ($item['GROUP_ID'] == ID_BASE_PRICE_B2B) $arProp[$item['ID']]['PRICE_1'] = $item["PRICE_VALUE"] . ' ₽';
+                        if ($item['GROUP_ID'] == ID_TYPE1_PRICE_B2B) $arProp[$item['ID']]['PRICE_2'] = $item["PRICE_VALUE"] . ' ₽';
+                        if ($item['GROUP_ID'] == ID_TYPE2_PRICE_B2B) $arProp[$item['ID']]['PRICE_3'] = $item["PRICE_VALUE"] . ' ₽';
+                        if ($item['GROUP_ID'] == ID_TYPE3_PRICE_B2B) $arProp[$item['ID']]['PRICE_4'] = $item["PRICE_VALUE"] . ' ₽';
 
                         if ($item['PROP_IBLOCK_PROPERTY_ID'] == '1751') {
                             $arProp[$item['ID']]['ARTICLE'] = $item["PROP_VALUE"];
@@ -417,13 +422,13 @@ class GeneratePriceList
                                 $arProp[$item['ID']]['LABEL'] = [];
                                 switch (mb_strtolower($arProps[1875][$item["PROP_VALUE"]])) {
                                     case 'новинка':
-                                        $arProp[$item['ID']]['LABEL'][] = ['CLASS' => 'green', 'ICON' => 'https://legend-tea.ru/bitrix/templates/b2b/assets/static/img/price_list/green-new.svg', 'TEXT' => 'Новинка'];
+                                        $arProp[$item['ID']]['LABEL'][] = ['CLASS' => 'green', 'ICON' => 'https://shop.legend-tea.ru/bitrix/templates/b2b/assets/static/img/price_list/green-new.svg', 'TEXT' => 'Новинка'];
                                         break;
                                     case 'хит':
-                                        $arProp[$item['ID']]['LABEL'][] = ['CLASS' => 'red', 'ICON' => 'https://legend-tea.ru/bitrix/templates/b2b/assets/static/img/price_list/red-fire.svg', 'TEXT' => 'Хит'];
+                                        $arProp[$item['ID']]['LABEL'][] = ['CLASS' => 'red', 'ICON' => 'https://shop.legend-tea.ru/bitrix/templates/b2b/assets/static/img/price_list/red-fire.svg', 'TEXT' => 'Хит'];
                                         break;
                                     case 'рекомендуем':
-                                        $arProp[$item['ID']]['LABEL'][] = ['CLASS' => 'yellow', 'ICON' => 'https://legend-tea.ru/bitrix/templates/b2b/assets/static/img/price_list/yellow-like.svg', 'TEXT' => 'Советуем'];
+                                        $arProp[$item['ID']]['LABEL'][] = ['CLASS' => 'yellow', 'ICON' => 'https://shop.legend-tea.ru/bitrix/templates/b2b/assets/static/img/price_list/yellow-like.svg', 'TEXT' => 'Советуем'];
                                         break;
                                     default:
                                         break;
@@ -880,7 +885,7 @@ class GeneratePriceList
                 data.append('section', sectId);
                 if(k == document.querySelectorAll('.table_holder').length - 1)  data.append('last_page','Y');
              
-                fetch('https://legend-tea.ru/ajax/upload-price-list.php', {
+                fetch('https://shop.legend-tea.ru/ajax/upload-price-list.php', {
                     method: 'POST',
                     body: data,
                 }).then(response => response.text()).then(result => {  console.log('Success:', result);}).catch(error => { console.error('Error:', error); });

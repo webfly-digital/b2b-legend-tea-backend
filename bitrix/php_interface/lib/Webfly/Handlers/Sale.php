@@ -19,15 +19,40 @@ class Sale
     }
 
 
-    public static function OnSaleComponentOrderCreatedHandler($order)
+    public static function OnSaleComponentOrderCreatedHandler($arUserResult, $request, $arParams)
     {
-        //AddMessage2Log($order);
     }
+
 
     public
     static function OnSaleComponentOrderPropertiesHandler(&$arUserResult, $arRequest, $arParams, $arResult)
     {
         self::changeNameProfileNewOrder($arUserResult, $arRequest, $arParams, $arResult);
+    }
+
+    static function OnSaleOrderSavedHandler(\Bitrix\Main\Event $event)
+    {
+        $order = $event->getParameter("ENTITY");
+        $isNewOrder = $event->getParameter("IS_NEW");
+
+        if ($isNewOrder) {
+            $siteId = $order->getSiteId();
+            if ($siteId == 's3') {
+                $orderPropertyCollection = $order->getPropertyCollection();
+                $profileProp = $orderPropertyCollection->getItemByOrderPropertyCode("PROFILE_ID");
+                if ($profileProp) {
+                    $profilePropValue = $profileProp->getValue();
+
+                    if ($profilePropValue == 0) {
+                        $profilePropValue = \Webfly\Helper\Buyer::getLastProfile($order->getUserId());
+                        $profileProp->setValue($profilePropValue);
+                        $order->save();
+                    }
+
+                    \Webfly\Helper\Buyer::setDefault($profilePropValue, $order->getUserId());
+                }
+            }
+        }
     }
 
     static function OnSaleOrderBeforeSavedHandler(\Bitrix\Main\Event $event)
@@ -48,7 +73,6 @@ class Sale
             $contactEmailProp = $orderPropertyCollection->getItemByOrderPropertyCode("CONTACT_EMAIL");
             if ($contactEmailProp) $contactEmailValue = $contactEmailProp->getValue();
             if ($contactEmailValue && $companyEmailProp) $companyEmailProp->setValue($contactEmailValue);
-
 
         }
     }
@@ -86,10 +110,6 @@ class Sale
                 $arUserResult['ORDER_PROP'][$profileNamePropID] = implode(' ', $nameProfileAr);
             }
         }
-//        if ($arUserResult['ORDER_PROP'] && $actionSave && !$profileFiz) {
-//            AddMessage2Log($arUserResult);
-//            AddMessage2Log($arRequest);
-//        }
     }
 
 //изменяем статус в сделке Б24, если изменён статус заказа
@@ -437,7 +457,7 @@ class Sale
                     $arIdPrice[$key] = ID_TYPE2_PRICE_B2B;
                 } else if ($item >= 100000) $arIdPrice[$key] = ID_TYPE3_PRICE_B2B;
             }
-            if($arIdPrice)  $idPrice = $arIdPrice[max($arIdPrice)];
+            if ($arIdPrice) $idPrice = $arIdPrice[max($arIdPrice)];
 
             $result['PRODUCT_PRICE'] = $arProductPrice;
             $result['PRODUCT_NEW_PRICE'] = $arProductUpadatePrice;

@@ -15,13 +15,11 @@ class CRM
 
     public static function OnAfterCrmDealAddHandler(&$arFields)
     {
-        $order = Order::load($arFields['ORDER_ID']);
-
         self::changeSelectedAddressReq($arFields);
         self::setONumber($arFields);
         self::setDelivery($arFields);
         self::setStoreMap($arFields);
-        self::changeTypeCompanyAndContact($arFields, $order);
+        self::changeTypeCompanyAndContact($arFields);
         self::addContactDeal($arFields);
     }
 
@@ -168,8 +166,12 @@ class CRM
 
     }
 
-    public static function changeTypeCompanyAndContact(&$arFields, $order) //изменяем тип комапнии и контакта на Оптовый клиент
+    public static function changeTypeCompanyAndContact(&$arFields) //изменяем тип комапнии и контакта на Оптовый клиент
     {
+        if (!$arFields['ID'] || !$arFields['ORDER_ID']) return;
+
+        $order = Order::load($arFields['ORDER_ID']);
+
         if ($arFields['SOURCE_ID'] == 'UC_NXQ5YR') { // источник сделки  Б2Б
             if ($arFields['CONTACT_ID']) {
                 $contactTypeB2B = 1;
@@ -291,8 +293,6 @@ class CRM
             if ($valueComment) $arFields['COMMENTS'] = $valueComment;
         }
     }
-
-
 
 
     public static function OnBeforeCrmDealUpdateHandler(&$arFields)
