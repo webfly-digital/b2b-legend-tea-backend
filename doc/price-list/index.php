@@ -1,5 +1,6 @@
 <?
 require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
+$APPLICATION->SetTitle("Скачать прайс листы | Легенда Чая / Montis");
 ?>
 <div class="container-size-3">
 	<p class="h2">Скачать прайс листы</p>
