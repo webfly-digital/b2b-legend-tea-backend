@@ -7,6 +7,7 @@
 $component = $this->getComponent();
 $arParams = $component->applyTemplateModifications();
 
+
 if ($arParams['SECTIONS']) {
 
     $arResult['COLUMNS'] = [];
@@ -56,6 +57,7 @@ if ($arParams['SECTIONS']) {
     $tree = [];
     $sections = [];
 
+
     /**
      * Простые товары без цены переносим в конец
      */
@@ -71,10 +73,14 @@ if ($arParams['SECTIONS']) {
                     continue;
                 }
             }
+
             $priceItems[] = $item;
         }
+
+
         $arResult['ITEMS'] = array_merge($priceItems, $noPriceItems);
     }
+
 
     foreach ($arResult['ITEMS'] as $key => $item) {
         if ($item['PROPERTIES']['HIT']['VALUE']) {
@@ -92,12 +98,34 @@ if ($arParams['SECTIONS']) {
                     break;
             }
         }
+
+        // Подставляем детальную картинку из ТП, если товар из раздела кофе и у него нет деталки:
+        if (
+            empty($item['DETAIL_PICTURE']) &&
+            str_starts_with($item['DETAIL_PAGE_URL'], '/catalog/kofe/')
+        ) {
+            foreach ($item['OFFERS'] as $offer) {
+                if (
+                    $offer['PROPERTIES']['UPAKOVKA']['VALUE'] === 'упак. 1000 гр.' &&
+                    !empty($offer['DETAIL_PICTURE'])
+                ) {
+                    $item['DETAIL_PICTURE'] = $offer['DETAIL_PICTURE'];
+                    break;
+                }
+            }
+        }
+
         $item['COLUMNS'] = $arResult['COLUMNS'][$item['~IBLOCK_SECTION_ID']];
+
         $tree[$item['~IBLOCK_SECTION_ID']][] = $item;
+
         if ($arParams['SEARCH'] == 'Y') {
             $arResult['ITEMS'][$key] = $item;
         }
     }
+
+
+
     if ($arParams['SEARCH'] == 'Y') {
         $arResult['COLUMNS_TITLE'] = [
             ['NAME' => 'Упаковка', 'CODE' => 'UPAKOVKA'],
@@ -109,7 +137,9 @@ if ($arParams['SECTIONS']) {
         $arResult['ORIGINAL_PARAMETERS']['SECTIONS'] = $arResult['SECTIONS'];
     }
 
+
 }
 
-$this->__component->SetResultCacheKeys(array("NAV_RESULT"));
 
+
+$this->__component->SetResultCacheKeys(array("NAV_RESULT"));

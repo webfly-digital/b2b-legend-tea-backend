@@ -39,11 +39,11 @@ class WebflyCheckout extends SaleOrderAjax
         6 => ['GROUP_ID' => 21],
     ];
     //const PERSONAL_HIDE_PROPS_ID = [46, 54, 64, 65, 98, 99, 112, 113, 114, 115,];
-    const PERSONAL_HIDE_PROPS_ID = [132, 64, 65,];
+    const PERSONAL_HIDE_PROPS_ID = [132, 64, 65, 150, 151];
 
     const OFFICE_SCHEDULE = 'Время работы: Вт-Вск: 08:00-16:00 в г. Пятигорске';
 
-    const SKIP_PROP_GROUPS = [12, 21, 16, 17]; //убираем Личные свойства юр лица и кто получат заказ физ лица
+    const SKIP_PROP_GROUPS = [21, 16, 17]; //убираем Личные свойства юр лица и кто получат заказ физ лица
     const STREET_PROPS = [70, 73];
 
 //    public function onPrepareComponentParams($arParams)
@@ -58,6 +58,19 @@ class WebflyCheckout extends SaleOrderAjax
      * и подсчет суммы
      * @param $result
      */
+
+    protected function makeUserResultArray()
+    {
+        parent::makeUserResultArray();
+
+        if ($this->arUserResult['PROFILE_ID'] == false && $this->arUserResult['PERSON_TYPE_ID'] == false) {
+            $this->arUserResult['PROFILE_ID'] = $this->arParams['PROFILE_INFO']['ID'];
+            $this->arUserResult['PROFILE_CHANGE'] = true;
+            $this->arUserResult['PERSON_TYPE_ID'] = $this->arParams['PROFILE_INFO']['PERSON_TYPE_ID'];
+            $this->arUserResult['PERSON_TYPE_OLD'] = $this->arParams['PROFILE_INFO']['PERSON_TYPE_ID'];
+        }
+    }
+
     public function basketHandler(&$result)
     {
         if (empty($result["JS_DATA"]["GRID"]['ROWS'])) return;
@@ -833,13 +846,16 @@ class WebflyCheckout extends SaleOrderAjax
                 }
             }
 
+            if ($property['CODE'] == 'PROFILE_ID') {
+                $property['VALUE'] = $result['JS_DATA']['CHECKED_PROFILE'];
+            }
+
 
             if ($property['CODE'] == 'COMPANY_PHONE' || $property['CODE'] == 'COMPANY_EMAIL') {
                 if ($result['JS_DATA']['CHECKED_PROFILE'] == 0) {
                     $property['EVENT'] = 'Y';
 
                     if (!empty($property['VALUE'])) {
-
                         $arData = \Webfly\Helper\Helper::getExistProfile($property['VALUE'], $property['CODE'], $this->getUserOrder());
                         if (!empty($arData)) {
                             $result['JS_DATA']['TOTAL']['EXIST_PROFILE'][] = $arData['MESSAGE'];

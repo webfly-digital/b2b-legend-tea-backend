@@ -5,6 +5,8 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 
 class B2BOrderComponent extends CBitrixComponent
 {
+
+
     public function executeComponent()
     {
         $this->arResult['SORT_FIELDS'] = [

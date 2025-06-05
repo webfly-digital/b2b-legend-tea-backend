@@ -190,7 +190,9 @@ $spoiler = count($arParams["SECTIONS"]) == 1 ? false : true;
                             <?
                             if ($arResult['ITEMS'][$sectionId]):
                                 $arResult['JS_ITEMS'] = [];
+
                                 foreach ($arResult['ITEMS'][$sectionId] as $item) {
+
                                     $uniqueId = $item['ID'] . '_' . md5($this->randString() . $component->getAction());
                                     $areaIds[$item['ID']] = $this->GetEditAreaId($uniqueId);
                                     $this->AddEditAction($uniqueId, $item['EDIT_LINK'], $elementEdit);
@@ -198,12 +200,6 @@ $spoiler = count($arParams["SECTIONS"]) == 1 ? false : true;
                                     $arResult['JS_ITEMS'][$item['ID']] = $areaIds[$item['ID']];
 
                                     $tmp = '';
-                                    global $USER;
-                                    if ($USER->GetID() == 2389) {
-                                        $tmp = 'admin';
-                                    }
-
-
 
                                     $APPLICATION->IncludeComponent(
                                         'bitrix:catalog.item',
@@ -271,6 +267,7 @@ $spoiler = count($arParams["SECTIONS"]) == 1 ? false : true;
                         <? if ($arResult['ITEMS']) {
                             $arResult['JS_ITEMS'] = [];
                             foreach ($arResult['ITEMS'] as $item) {
+
                                 $uniqueId = $item['ID'] . '_' . md5($this->randString() . $component->getAction());
                                 $areaIds[$item['ID']] = $this->GetEditAreaId($uniqueId);
                                 $this->AddEditAction($uniqueId, $item['EDIT_LINK'], $elementEdit);
@@ -278,13 +275,6 @@ $spoiler = count($arParams["SECTIONS"]) == 1 ? false : true;
                                 $arResult['JS_ITEMS'][$item['ID']] = $areaIds[$item['ID']];
 
                                 $tmp = '';
-                                global $USER;
-                                if ($USER->GetID() == 2389) {
-                                    $tmp = 'admin';
-                                }
-
-                             
-
                                 $APPLICATION->IncludeComponent(
                                     'bitrix:catalog.item',
                                     $tmp,

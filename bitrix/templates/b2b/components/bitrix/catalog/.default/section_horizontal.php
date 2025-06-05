@@ -77,12 +77,13 @@ if ($arResult["VARIABLES"]["SECTION_ID"]) {
                     <div class="icon icon-cross close" style="background: #979797;"></div>
                 </div>
                 <div class="middle">
-                    <? include_once 'order.php'; ?>
-                    <? include_once 'prices.php'; ?>
-                    <? include_once 'search_form.php'; ?>
+
                     <? include_once 'filter.php'; ?>
+                    <? include_once 'order.php'; ?>
+                    <? //include_once 'prices.php'; ?>
+                    <? include_once 'search_form.php'; ?>
                     <? include_once 'view.php'; ?>
-                    <? if (!$searchInitialised) include_once 'pomol.php'; //если етсь поиск, то не отображаем помол?>
+                    <? //if (!$searchInitialised) include_once 'pomol.php'; //если етсь поиск, то не отображаем помол?>
                 </div>
 
                 <? //$APPLICATION->ShowViewContent('FILTER_RESULTS'); ?>
