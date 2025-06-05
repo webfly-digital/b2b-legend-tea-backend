@@ -291,21 +291,25 @@ class GeneratePriceList
         $sectIdsNoPack = array_diff($sectIDs, $sectIdsPack);
 
         if ($sectIDs) {
-            $dbItems = \Bitrix\Iblock\ElementTable::getList(array(
+            $dbItems = \Bitrix\Iblock\ElementTable::getList([
                 'order' => ['NAME' => 'asc'],
-                'select' => array('NAME', 'ID', 'IBLOCK_SECTION_ID', 'TYPE' => 'PRODUCT.TYPE', 'PRICE_VALUE' => 'PRICE.PRICE', 'GROUP_ID' => 'PRICE.CATALOG_GROUP_ID', 'PROP_' => 'PROP',
-                ),
-                'filter' => array(
+                'select' => ['NAME', 'ID', 'IBLOCK_SECTION_ID', 'TYPE' => 'PRODUCT.TYPE', 'PRICE_VALUE' => 'PRICE.PRICE', 'GROUP_ID' => 'PRICE.CATALOG_GROUP_ID', 'PROP_' => 'PROP',
+                ],
+                'filter' => [
                     'IBLOCK_ID' => 93,
                     'ACTIVE' => 'Y',
                     'IBLOCK_SECTION_ID' => $sectIDs,
+
+                    // Фильтруем по свойству "Оптовый сегмент", берем только значение "Да"
+                    'PROP_VALUE' => 84119,
+                    'PROP_IBLOCK_PROPERTY_ID' => 2644,
                     [
                         "LOGIC" => "OR",
                         ['PRODUCT.TYPE' => 3,],
-                        ['PRODUCT.TYPE' => 1, 'PRICE.CATALOG_GROUP_ID' =>[ID_BASE_PRICE_B2B, ID_TYPE1_PRICE_B2B, ID_TYPE2_PRICE_B2B, ID_TYPE3_PRICE_B2B],],
+                        ['PRODUCT.TYPE' => 1, 'PRICE.CATALOG_GROUP_ID' => [ID_BASE_PRICE_B2B, ID_TYPE1_PRICE_B2B, ID_TYPE2_PRICE_B2B, ID_TYPE3_PRICE_B2B],],
                     ]
-                ),
-                'runtime' => array(
+                ],
+                'runtime' => [
                     new \Bitrix\Main\Entity\ReferenceField(
                         'PRICE',
                         '\Bitrix\Catalog\PriceTable',
@@ -321,8 +325,8 @@ class GeneratePriceList
                         '\Bitrix\Iblock\ElementPropertyTable',
                         ['=this.ID' => 'ref.IBLOCK_ELEMENT_ID',]
                     ),
-                ),
-            ))->fetchAll();
+                ],
+            ])->fetchAll();
             $dbProp = \Bitrix\Iblock\PropertyEnumTable::getList(array(
                 'order' => ['ID' => 'asc'],
                 'select' => ['ID', 'PROPERTY_ID', 'VALUE'],
@@ -331,15 +335,20 @@ class GeneratePriceList
             ))->fetchAll();
 
             if ($sectIdsNoPack && $sectIdsPack) {
-                $dbItemsTp = \Bitrix\Iblock\ElementTable::getList(array(
+                $dbItemsTp = \Bitrix\Iblock\ElementTable::getList([
                     'order' => ['TYPE' => 'desc'],
-                    'select' => array('NAME', 'ID', 'ELEM_ID' => 'PARENT_ELEMENT.ID', 'ELEM_NAME' => 'PARENT_ELEMENT.NAME', 'IBLOCK_SECTION_ID' => 'PARENT_ELEMENT.IBLOCK_SECTION_ID', 'PRICE_VALUE' => 'PRICE.PRICE', 'GROUP_ID' => 'PRICE.CATALOG_GROUP_ID', 'TYPE' => 'PRODUCT.TYPE', 'PROP_' => 'PROP',
-                    ),
-                    'filter' => array(
+                    'select' => ['NAME', 'ID', 'ELEM_ID' => 'PARENT_ELEMENT.ID', 'ELEM_NAME' => 'PARENT_ELEMENT.NAME', 'IBLOCK_SECTION_ID' => 'PARENT_ELEMENT.IBLOCK_SECTION_ID', 'PRICE_VALUE' => 'PRICE.PRICE', 'GROUP_ID' => 'PRICE.CATALOG_GROUP_ID', 'TYPE' => 'PRODUCT.TYPE', 'PROP_' => 'PROP',
+                    ],
+                    'filter' => [
                         'IBLOCK_ID' => [93, 94],
                         'ACTIVE' => 'Y',
                         'PARENT_ELEMENT.ACTIVE' => 'Y',
                         'PRICE.CATALOG_GROUP_ID' => [ID_BASE_PRICE_B2B, ID_TYPE1_PRICE_B2B, ID_TYPE2_PRICE_B2B, ID_TYPE3_PRICE_B2B],
+
+                        // Фильтруем по свойству "Оптовый сегмент", берем только значение "Да"
+                        'PROP_VALUE' => 84119,
+                        'PROP_IBLOCK_PROPERTY_ID' => 2644,
+
                         [
                             'LOGIC' => 'OR',
                             [
@@ -349,8 +358,8 @@ class GeneratePriceList
                             ],
                             ['IBLOCK_SECTION_ID' => $sectIdsNoPack,],
                         ],
-                    ),
-                    'runtime' => array(
+                    ],
+                    'runtime' => [
                         new \Bitrix\Main\Entity\ReferenceField(
                             'LINK',
                             '\Bitrix\Iblock\ElementPropertyTable',
@@ -376,8 +385,8 @@ class GeneratePriceList
                             '\Bitrix\Iblock\ElementPropertyTable',
                             ['=this.ID' => 'ref.IBLOCK_ELEMENT_ID',]
                         ),
-                    ),
-                ))->fetchAll();
+                    ],
+                ])->fetchAll();
 
                 $arProps = [];
                 foreach ($dbProp as $prop) {
