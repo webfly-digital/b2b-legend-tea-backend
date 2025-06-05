@@ -7,6 +7,7 @@
 $component = $this->getComponent();
 $arParams = $component->applyTemplateModifications();
 
+
 if ($arParams['SECTIONS']) {
 
     $arResult['COLUMNS'] = [];
@@ -56,6 +57,7 @@ if ($arParams['SECTIONS']) {
     $tree = [];
     $sections = [];
 
+
     /**
      * Простые товары без цены переносим в конец
      */
@@ -71,10 +73,14 @@ if ($arParams['SECTIONS']) {
                     continue;
                 }
             }
+
             $priceItems[] = $item;
         }
+
+
         $arResult['ITEMS'] = array_merge($priceItems, $noPriceItems);
     }
+
 
     foreach ($arResult['ITEMS'] as $key => $item) {
         if ($item['PROPERTIES']['HIT']['VALUE']) {
@@ -92,12 +98,18 @@ if ($arParams['SECTIONS']) {
                     break;
             }
         }
+
         $item['COLUMNS'] = $arResult['COLUMNS'][$item['~IBLOCK_SECTION_ID']];
+
+
         $tree[$item['~IBLOCK_SECTION_ID']][] = $item;
         if ($arParams['SEARCH'] == 'Y') {
             $arResult['ITEMS'][$key] = $item;
         }
+
     }
+
+
     if ($arParams['SEARCH'] == 'Y') {
         $arResult['COLUMNS_TITLE'] = [
             ['NAME' => 'Упаковка', 'CODE' => 'UPAKOVKA'],
@@ -109,7 +121,10 @@ if ($arParams['SECTIONS']) {
         $arResult['ORIGINAL_PARAMETERS']['SECTIONS'] = $arResult['SECTIONS'];
     }
 
+
 }
+
+
 
 $this->__component->SetResultCacheKeys(array("NAV_RESULT"));
 
