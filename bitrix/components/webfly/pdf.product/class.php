@@ -94,7 +94,7 @@ class pdfProductComponent extends CBitrixComponent implements Controllerable
                 $value = $itemLogo['VALUE'];
                 if ($value) $res = CFile::getPath($value);
             } else {
-                $value = unserialize($itemLogo['VALUE']);
+                $value = unserialize($itemLogo['VALUE'], ['allowed_classes' => false]);
                 if ($value) $res = CFile::getPath(current($value));
             }
         }

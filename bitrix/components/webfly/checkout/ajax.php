@@ -29,7 +29,7 @@ try
     $signedParamsString = $request->get('signedParamsString') ?: '';
     $params = $signer->unsign($signedParamsString, 'webfly.checkout');
     $template = $signer->unsign($request->get('template') ?: '', 'webfly.checkout') ?: '.default';
-    $params = unserialize(base64_decode($params));
+    $params = unserialize(base64_decode($params), ['allowed_classes' => false]);
 }
 catch (\Bitrix\Main\Security\Sign\BadSignatureException $e)
 {

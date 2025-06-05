@@ -91,7 +91,7 @@ class B2BFavoritesComponent extends CBitrixComponent implements Controllerable
         $guestFavorites = [];
 
         if ($existsCookie) {
-            $guestFavorites = unserialize($existsCookie);
+            $guestFavorites = unserialize($existsCookie, ['allowed_classes' => false]);
             if (!is_array($guestFavorites)) {
                 $guestFavorites = [];
             }
@@ -177,7 +177,7 @@ class B2BFavoritesComponent extends CBitrixComponent implements Controllerable
 
         $guestFavorites = [];
         if ($existsCookie) {
-            $guestFavorites = unserialize($existsCookie);
+            $guestFavorites = unserialize($existsCookie, ['allowed_classes' => false]);
             if (!is_array($guestFavorites)) {
                 $guestFavorites = [];
             }
