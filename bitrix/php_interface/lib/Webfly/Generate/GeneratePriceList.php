@@ -29,8 +29,7 @@ class GeneratePriceList
 
     function __construct($root = '')
     {
-
-        if (!empty($root)) $_SERVER['DOCUMENT_ROOT'] = $root;
+        if (!empty($root)) $_SERVER['DOCUMENT_ROOT'] = $root; //todo: Ох-хо-хо... Опасно! Нехорошо менять глобальное состояние (откуда бы экземпляр класса не вызвался)
         $this->path = $_SERVER['DOCUMENT_ROOT'] . '/upload/price-list-files/';
         $this->pathAllSect = $_SERVER['DOCUMENT_ROOT'] . '/upload/price-list-files/sections/';
         $this->pathPdfStatic = $_SERVER['DOCUMENT_ROOT'] . '/upload/price-list-files/pdf-static/';
@@ -121,8 +120,11 @@ class GeneratePriceList
         }
     }
 
+    //todo: Модификаторы доступа не зря придумали
     function generateHTML()
     {
+        //todo: То что логика разнесена хотя бы по методам хорошо, но лучше её разнести по классам (SRP), но будем считать, что это я уже душню
+        //todo: Следующим этапом перехода от процедурного программирования к объектно-ориентированному было бы return. Лучше, когда метод что-то возвращает
         $this->getInfo();
         $this->formatedHTML();
         $this->createHTML('price-list', $this->path);
