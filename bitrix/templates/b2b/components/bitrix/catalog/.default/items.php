@@ -36,7 +36,7 @@ if (!empty($userId)) {
     $order = ['sort' => 'asc'];
     $tmp = 'sort';
     $filter = ['ID' => $userId];
-    $select = ["UF_VIEW"];
+    $select = ["UF_VIEW", 'UF_ID_PRICE'];
     if (in_array('POMOL', $arParams['OFFER_TREE_PROPS'])) $select[] = "UF_ID_POMOL";
     $rsUsers = CUser::GetList($order, $tmp, $filter, ["SELECT" => $select]);
 
@@ -45,6 +45,7 @@ if (!empty($userId)) {
             $selectedPomol = $arUser['UF_ID_POMOL'];
         }
         $selectedViewID = $arUser['UF_VIEW'];
+        $selectedPriceID = $arUser['UF_ID_PRICE'];
     }
 
     if ($selectedViewID) {
@@ -118,7 +119,6 @@ if (!empty($arSearchElements) && !empty($sections)) { //есди найдены 
     $APPLICATION->IncludeComponent("bitrix:catalog.section.list", "search_catalog", $sectionsParams, false);
 
     if (!empty($queryList['sections'])) $arrFilter['IBLOCK_SECTION_ID'] = $queryList['sections'];
-
 }
 
 
@@ -258,13 +258,13 @@ $sectionParams = array(
 
 unset($sectionParams["PRICE_CODE"]);
 $sectionParams["PRICE_CODE"][] = 'ОПТОВЫЙ КАБИНЕТ с НДС';
-if ($_REQUEST["price"]) {
+if ($selectedPriceID) {
     unset($sectionParams["PRICE_CODE"]);
-    if ($_REQUEST["price"] == ID_TYPE1_PRICE_B2B) {
+    if ($selectedPriceID == ID_TYPE1_PRICE_B2B) {
         $sectionParams["PRICE_CODE"][] = '2 от 15.000 руб. с НДС';
-    } elseif ($_REQUEST["price"] == ID_TYPE2_PRICE_B2B) {
+    } elseif ($selectedPriceID == ID_TYPE2_PRICE_B2B) {
         $sectionParams["PRICE_CODE"][] = '3 от 50.000 руб. с НДС';
-    } elseif ($_REQUEST["price"] == ID_TYPE3_PRICE_B2B) {
+    } elseif ($selectedPriceID == ID_TYPE3_PRICE_B2B) {
         $sectionParams["PRICE_CODE"][] = '4 от 100.000 руб. с НДС';
     }
 }
