@@ -115,6 +115,12 @@ class Agent
         return '\Webfly\Helper\Agent::fullMinPrice();';
     }
 
+    //todo: разобраться с этим очень странным методом:
+    // 1) в списке агентов в админке нет такого агента
+    // 2) нак кроне тоже агентов вроде бы нет
+    // 3) очень странные поля в методе ( дважды $example) и непонятно зачем
+    // 4) ну и в классе GeneratePriceList нет метода agent
+    // Таким образом это очень похоже на мёртвый и неверный код.
     public static function agentGeneratePriceList($type)
     {
         $example = new \Webfly\Generate\GeneratePriceList();

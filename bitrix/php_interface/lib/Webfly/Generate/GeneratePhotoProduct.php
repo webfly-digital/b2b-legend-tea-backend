@@ -10,6 +10,13 @@ use Spipu\Html2Pdf\Locale;
 class GeneratePhotoProduct
 {
 
+    /*
+     *
+     * $ex = new \Webfly\Generate\GeneratePhotoProduct();
+$ex->execute();
+    запускаем генерацию html файла, потом открываем его   по ссылке shop.legend-tea.ru/upload/generate_picture/pictureProduct.html
+    */
+
     protected $arData = [];
 
     protected $html = '';
@@ -17,10 +24,14 @@ class GeneratePhotoProduct
     protected $script = '';
     public $path = '';
 
+
     protected $folder = '/bitrix/php_interface/lib/Webfly/Generate';
     protected $pathDownload = '/upload/generate_picture';
     protected $pathQr = '';
     protected $pathBar = '';
+
+    protected $valueUpakovkaPictureProduct = 5856;
+    protected $valueUpakovkaPictureTP = [5857, 5858, 5856];// на 250гр 500гр 1000гр,
 
 
     function __construct($root = '')
@@ -202,14 +213,14 @@ body {
     public function getInfo()
     {
 
-        $arFilter = array('IBLOCK_ID' => CATALOG_IBLOCK_ID, 'SECTION_ID' => COFFEE_SECTION_ID, 'CHECK_PERMISSIONS' => 'N', /* 'GLOBAL_ACTIVE' => 'Y',*/ );
+        $arFilter = array('IBLOCK_ID' => CATALOG_IBLOCK_ID, 'SECTION_ID' => COFFEE_SECTION_ID, 'CHECK_PERMISSIONS' => 'N', /* 'GLOBAL_ACTIVE' => 'Y',*/);
         $db_list = \CIBlockSection::GetList([], $arFilter, false);
         while ($ar_result = $db_list->GetNext()) {
             $arSect[] = $ar_result['ID'];
         }
 
 
-        $arProp = [1777, 2087, 1751, 1774, 2086, 1760, 1767, 1769, 1750, 2162];
+        $arProp = [1777, 2087, 1751, 1774, 2151, 1760, 1767, 1769, 1750];//, 2162];
 
         $dbItems = \Bitrix\Iblock\ElementTable::getList(array(
             'order' => ['NAME' => 'asc'],
@@ -220,14 +231,15 @@ body {
                 'TP_PROPS_' => 'TP_PROPS',
                 'ELEMENT_' => 'ELEMENT',
                 'ELEMENT_PROPS_' => 'ELEMENT_PROPS',
+                'DETAIL_PICTURE',
 
                 'DETAIL_PAGE_URL_ROW' => 'ELEMENT.IBLOCK.DETAIL_PAGE_URL',
                 'ELEMENT.NAME', 'ELEMENT.ID', 'ELEMENT.CODE', 'ELEMENT.IBLOCK_SECTION_ID',
                 'ELEMENT.DETAIL_PICTURE'),
-
             'filter' => array(
                 'IBLOCK_ID' => 94,
                 'ACTIVE' => 'Y',
+                // 'ELEMENT.ID' => 98504,
                 'ELEMENT.ACTIVE' => 'Y',
                 'ELEMENT.IBLOCK_SECTION_ID' => $arSect,
 
@@ -237,7 +249,7 @@ body {
                 'PROP_POMOL.VALUE' => 5662,
 
                 'PROP_UPAK.IBLOCK_PROPERTY_ID' => 1812,
-                'PROP_UPAK.VALUE' => 5856,
+                'PROP_UPAK.VALUE' => $this->valueUpakovkaPictureTP,
 
                 'TP_PROPS.IBLOCK_PROPERTY_ID' => 1786,
 
@@ -298,11 +310,10 @@ body {
             if (empty($this->arData[$item['ID']]['PROP'])) {
                 $item['PROP'] = [];
                 $this->arData[$item['ID']] = $item;
+                $this->arData[$item['ID']]['PRODUCT_ID'] = $item['ID'];
             }
-            if ($arProps[$item['ELEMENT_PROPS_IBLOCK_PROPERTY_ID']]) {
-                $this->arData[$item['ID']]['PROP'] = $this->arData[$item['ID']]['PROP'] + [$item['ELEMENT_PROPS_IBLOCK_PROPERTY_ID'] => $arProps[$item['ELEMENT_PROPS_IBLOCK_PROPERTY_ID']][$item['ELEMENT_PROPS_VALUE']]];
-            } else
-                $this->arData[$item['ID']]['PROP'] = $this->arData[$item['ID']]['PROP'] + [$item['ELEMENT_PROPS_IBLOCK_PROPERTY_ID'] => $item['ELEMENT_PROPS_VALUE']];
+            if ($arProps[$item['ELEMENT_PROPS_IBLOCK_PROPERTY_ID']]) $this->arData[$item['ID']]['PROP'] = $this->arData[$item['ID']]['PROP'] + [$item['ELEMENT_PROPS_IBLOCK_PROPERTY_ID'] => $arProps[$item['ELEMENT_PROPS_IBLOCK_PROPERTY_ID']][$item['ELEMENT_PROPS_VALUE']]];
+            else $this->arData[$item['ID']]['PROP'] = $this->arData[$item['ID']]['PROP'] + [$item['ELEMENT_PROPS_IBLOCK_PROPERTY_ID'] => $item['ELEMENT_PROPS_VALUE']];
 
 
             if ($arProps[$item['PROP_POMOL_IBLOCK_PROPERTY_ID']]) $this->arData[$item['ID']]['PROP'] = $this->arData[$item['ID']]['PROP'] + [$item['PROP_POMOL_IBLOCK_PROPERTY_ID'] => $arProps[$item['PROP_POMOL_IBLOCK_PROPERTY_ID']][$item['PROP_POMOL_VALUE_ENUM']]];
@@ -315,14 +326,23 @@ body {
             else   $this->arData[$item['ID']]['PROP'] = $this->arData[$item['ID']]['PROP'] + [$item['TP_PROPS_IBLOCK_PROPERTY_ID'] => $item['TP_PROPS_VALUE']];
         }
 
+
         foreach ($this->arData as $key => $item) {
-            $this->arData[$key]['INFO']['id'] = $item['ELEMENT_ID'];
+            if ($item["PROP_UPAK_VALUE"] == $this->valueUpakovkaPictureProduct) {
+                $this->arData[$item['ELEMENT_ID']] = $item;
+                $this->arData[$item['ELEMENT_ID']]['PRODUCT_ID'] = $item['ELEMENT_ID'];
+            }
+        }
+
+
+        foreach ($this->arData as $key => $item) {
+            $this->arData[$key]['INFO']['id'] = $item['PRODUCT_ID'];
             $itemUrl = [
                 'ID' => $item['ELEMENT_ID'],
                 'CODE' => $item['ELEMENT_CODE'],
-                'IBLOCK_SECTION_ID' =>  $item['ELEMENT_IBLOCK_SECTION_ID'],
+                'IBLOCK_SECTION_ID' => $item['ELEMENT_IBLOCK_SECTION_ID'],
             ];
-            $this->arData[$key]['DETAIL_PAGE_URL'] = 'https://' . $_SERVER['SERVER_NAME'] . \CIBlock::ReplaceDetailUrl($item["DETAIL_PAGE_URL_ROW"], $itemUrl, true, "E");
+            $this->arData[$key]['DETAIL_PAGE_URL'] = 'https://shop.legend-tea.ru/' . \CIBlock::ReplaceDetailUrl($item["DETAIL_PAGE_URL_ROW"], $itemUrl, true, "E");
 
             if ($this->arData[$key]['DETAIL_PAGE_URL']) {
                 $pathQr = $this->pathQr . 'qr_pixel_' . $item['ELEMENT_ID'] . '.png';
@@ -331,11 +351,17 @@ body {
                 \QRcode::png($this->arData[$key]['DETAIL_PAGE_URL'], $_SERVER['DOCUMENT_ROOT'] . $pathQr, 'Q', '2px', '1px');
                 $this->arData[$key]['INFO']['qr'] = $pathQr;
             }
-            $this->arData[$key]['INFO']['old_file'] = $item['ELEMENT_DETAIL_PICTURE'];
+
+            if ($item['PRODUCT_ID'] == $item['ELEMENT_ID']) $this->arData[$key]['INFO']['old_file'] = $item['ELEMENT_DETAIL_PICTURE'];
+            if ($item['PRODUCT_ID'] == $item['ID']) $this->arData[$key]['INFO']['old_file'] = $item['DETAIL_PICTURE'];
+
 
             foreach ($item['PROP'] as $keyProp => $prop) {
-                $this->arData[$key]['INFO']['size'] = 1000;
+                $this->arData[$key]['INFO']['roasting_date'] = date('d.m.Y');
                 switch ($keyProp) {
+                    case 1812:
+                        $this->arData[$key]['INFO']['size'] = $prop;
+                        break;
                     case 1777:
                         $this->arData[$key]['INFO']['title'] = $prop;
                         break;
@@ -348,7 +374,7 @@ body {
                     case 1774:
                         $this->arData[$key]['INFO']['country'] = $prop;
                         break;
-                    case 2086:
+                    case 2151:
                         $this->arData[$key]['INFO']['coffee_bean_type'] = $prop;
                         break;
                     case 1760:
@@ -356,6 +382,9 @@ body {
                         break;
                     case 1767:
                         $this->arData[$key]['INFO']['roasting'] = $prop;
+                        break;
+                    case 2087:
+                        $this->arData[$key]['INFO']['harvest'] = $prop;
                         break;
                     case 1795://tp
                         $this->arData[$key]['INFO']['grind_type'] = $prop;
@@ -365,7 +394,7 @@ body {
                             if (file_exists('/root/vendor/autoload.php')) require_once '/root/vendor/autoload.php';
                             $renderer = new \Picqer\Barcode\BarcodeGeneratorPNG();
                             $res = $renderer->getBarcode($prop, 'EAN13');
-                            $pathBar = $this->pathBar . 'bar_code' . $item['ELEMENT_ID'] . '.png';
+                            $pathBar = $this->pathBar . 'bar_code' . $item['PRODUCT_ID'] . '.png';
 
                             file_put_contents($_SERVER['DOCUMENT_ROOT'] . $pathBar, $res);
                             $this->arData[$key]['INFO']['code'] = $pathBar;
@@ -377,8 +406,8 @@ body {
 
                 }
             }
+            if (empty($this->arData[$key]['INFO']['title'])) $this->arData[$key]['INFO']['title'] = $item['ELEMENT_NAME'];
         }
-
     }
 
 
@@ -398,15 +427,17 @@ body {
     public
     function createHTML($nameFile = '/pictureProduct', $path = '')
     {
+        ksort($this->arData);
         foreach ($this->arData as $key => $item) {
             $elems[] = $item['INFO'];
         }
         $obj = \CUtil::PhpToJSObject($elems);
-        var_dump($obj);
+
 
         $this->script = <<<EOD
     <script>
         let allData = {$obj};
+        console.log( allData.length);
         const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms))
 
         const checkReponse = (res) => {
@@ -432,6 +463,7 @@ body {
 
             let aspRatio, renderHeight, renderSize
             let imageSrc = '{$this->folder}/assets/img/png/montis_mockup_1000g.png'
+            let inRecursion = false
 
             let fileName, fileId, oldFile, fileTitle
 
@@ -520,22 +552,24 @@ body {
 
             const generateRecursion = (callback) => {
                 const recursion = async (index) => {
+               
                     if (!allData[index]) {
                         console.log('end')
                         return;
                     }
 
+                    inRecursion = true
+
                     let data = allData[index]
-                    console.log(data)
+                    let sizeNumb = data.size.replace('упак. ', '').replace(' гр.', '')
+               
 
-                    // document.getElementById('generate').innerHTML = ""
-
-                    fileName = data.size
+                    fileName = sizeNumb
                     fileId = data.id
                     oldFile = data.old_file
                     fileTitle = data.title
 
-                    switch (data.size) {
+                    switch (sizeNumb) {
                         case '1000':
                             aspRatio = '1280 / 1934'
                             imageSrc = '{$this->folder}/assets/img/png/montis_mockup_1000g.png'
@@ -558,6 +592,7 @@ body {
 
                     await wait(250);
 
+                    newImage.src = imageSrc;
                     newTitle.innerHTML = data.title;
                     newSubtitle.innerHTML = 
                         (typeof data.country !== "undefined" ? "Страна: <b style='font-family: 'Avenir Demi';'>" + data.country + "</b>. " : "") + 
@@ -566,10 +601,10 @@ body {
                         (typeof data.process_type !== "undefined" ? data.process_type + "." : "");
                     
                     newInfo.innerHTML = 
-                        (typeof data.roasting !== "undefined" ? "<span style='white-space: nowrap;'>" + data.roasting + "</span><br>" : "") + 
+                        (typeof data.roasting !== "undefined" ? "<span style='white-space: nowrap;'>" + data.roasting + ", " + data.size + "</span><br>" : "<span style='white-space: nowrap;'>" + data.size + "</span><br>") + 
                         (typeof data.grind_type !== "undefined" ? "<span style='white-space: nowrap;'>" + data.grind_type + "</span><br>" : "") + 
                         (typeof data.article_number !== "undefined" ? "<span style='white-space: nowrap;'>Арт.: " + data.article_number + "</span><br>" : "") + 
-                        (typeof data.roasting_date !== "undefined" ? "<span style='white-space: nowrap;'>Дата обжарки:" + data.roasting_date + "</span>" : "");
+                        (typeof data.roasting_date !== "undefined" ? "<span style='white-space: nowrap;'>Дата обжарки: " + data.roasting_date + "</span>" : "");
                     
                     if (data.qr && data.qr !== '') {
                         newInfo.style.left = '64px';
@@ -592,7 +627,7 @@ body {
 
                     await wait(250);
 
-                    html2canvas(document.getElementById('generate'), {
+                    newImage.onload = html2canvas(document.getElementById('generate'), {
                         scale: 4,
                     }).then(async(canvas) => {
                         let img = canvas.toDataURL("image/jpeg", 0.9);
@@ -633,7 +668,7 @@ body {
                             recursion(index + 1)
                         })
                         .then(result => {
-                            console.log('Success:', result);
+                            console.log('Success:', result, index);
                         })
                         .catch(error => {
                             console.error('Error:', error);
@@ -686,7 +721,9 @@ body {
                 recursion(0)
             }
 
-            newImage.onload = generateRecursion
+            newImage.onload = () => {
+                !inRecursion && generateRecursion()
+            }
 
         })
     </script>

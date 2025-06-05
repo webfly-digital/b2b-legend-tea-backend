@@ -7,6 +7,11 @@ use Bitrix\Catalog\PriceTable;
 use Spipu\Html2Pdf\Locale;
 
 
+const ID_BASE_PRICE_B2B = 32;
+const ID_TYPE1_PRICE_B2B = 28;
+const ID_TYPE2_PRICE_B2B = 29;
+const ID_TYPE3_PRICE_B2B = 30;
+
 class GeneratePriceList
 {
     protected $iblockId = 93;
@@ -24,8 +29,7 @@ class GeneratePriceList
 
     function __construct($root = '')
     {
-
-        if (!empty($root)) $_SERVER['DOCUMENT_ROOT'] = $root;
+        if (!empty($root)) $_SERVER['DOCUMENT_ROOT'] = $root; //todo: Ох-хо-хо... Опасно! Нехорошо менять глобальное состояние (откуда бы экземпляр класса не вызвался)
         $this->path = $_SERVER['DOCUMENT_ROOT'] . '/upload/price-list-files/';
         $this->pathAllSect = $_SERVER['DOCUMENT_ROOT'] . '/upload/price-list-files/sections/';
         $this->pathPdfStatic = $_SERVER['DOCUMENT_ROOT'] . '/upload/price-list-files/pdf-static/';
@@ -116,8 +120,11 @@ class GeneratePriceList
         }
     }
 
+    //todo: Модификаторы доступа не зря придумали
     function generateHTML()
     {
+        //todo: То что логика разнесена хотя бы по методам хорошо, но лучше её разнести по классам (SRP), но будем считать, что это я уже душню
+        //todo: Следующим этапом перехода от процедурного программирования к объектно-ориентированному было бы return. Лучше, когда метод что-то возвращает
         $this->getInfo();
         $this->formatedHTML();
         $this->createHTML('price-list', $this->path);
@@ -131,25 +138,25 @@ class GeneratePriceList
 
 
         $this->html = '<main class="price_list first">
-            <img src="https://legend-tea.ru/bitrix/templates/b2b/assets/static/img/price_list/price_list_1.png">
+            <img src="https://shop.legend-tea.ru/bitrix/templates/b2b/assets/static/img/price_list/price_list_1.png">
 			<div class="title_block">
 				<p class="title">Прайс-лист</p>
 				<p class="subtitle">Оптовые поставки кофе и чая собственного производства и с собственного склада</p>
 			</div>
 
 			<div class="connect">
-				<img src="https://legend-tea.ru/bitrix/templates/b2b/assets/static/img/price_list/qr.svg" alt="">
+				<img src="https://shop.legend-tea.ru/bitrix/templates/b2b/assets/static/img/price_list/qr.svg" alt="">
 				<ul>
 					<li>
-						<img src="https://legend-tea.ru/bitrix/templates/b2b/assets/static/img/price_list/call.svg" alt="">
+						<img src="https://shop.legend-tea.ru/bitrix/templates/b2b/assets/static/img/price_list/call.svg" alt="">
 						<p>8 (800) 700-78-87</p>
 					</li>
 					<li>
-						<img src="https://legend-tea.ru/bitrix/templates/b2b/assets/static/img/price_list/mail.svg" alt="">
+						<img src="https://shop.legend-tea.ru/bitrix/templates/b2b/assets/static/img/price_list/mail.svg" alt="">
 						<p>zakaz@legend-tea.ru</p>
 					</li>
 					<li>
-						<img src="https://legend-tea.ru/bitrix/templates/b2b/assets/static/img/price_list/web.svg" alt="">
+						<img src="https://shop.legend-tea.ru/bitrix/templates/b2b/assets/static/img/price_list/web.svg" alt="">
 						<p>legend-tea.ru</p>
 					</li>
 				</ul>
@@ -180,7 +187,7 @@ class GeneratePriceList
             data.append('file', file);
             data.append('static', 'Y');
          
-            fetch('https://legend-tea.ru/ajax/upload-price-list.php', {
+            fetch('https://shop.legend-tea.ru/ajax/upload-price-list.php', {
                 method: 'POST',
                 body: data,
             })
@@ -286,21 +293,25 @@ class GeneratePriceList
         $sectIdsNoPack = array_diff($sectIDs, $sectIdsPack);
 
         if ($sectIDs) {
-            $dbItems = \Bitrix\Iblock\ElementTable::getList(array(
+            $dbItems = \Bitrix\Iblock\ElementTable::getList([
                 'order' => ['NAME' => 'asc'],
-                'select' => array('NAME', 'ID', 'IBLOCK_SECTION_ID', 'TYPE' => 'PRODUCT.TYPE', 'PRICE_VALUE' => 'PRICE.PRICE', 'GROUP_ID' => 'PRICE.CATALOG_GROUP_ID', 'PROP_' => 'PROP',
-                ),
-                'filter' => array(
+                'select' => ['NAME', 'ID', 'IBLOCK_SECTION_ID', 'TYPE' => 'PRODUCT.TYPE', 'PRICE_VALUE' => 'PRICE.PRICE', 'GROUP_ID' => 'PRICE.CATALOG_GROUP_ID', 'PROP_' => 'PROP',
+                ],
+                'filter' => [
                     'IBLOCK_ID' => 93,
                     'ACTIVE' => 'Y',
                     'IBLOCK_SECTION_ID' => $sectIDs,
+
+                    // Фильтруем по свойству "Оптовый сегмент", берем только значение "Да"
+                    'PROP_VALUE' => 84119,
+                    'PROP_IBLOCK_PROPERTY_ID' => 2644,
                     [
                         "LOGIC" => "OR",
                         ['PRODUCT.TYPE' => 3,],
-                        ['PRODUCT.TYPE' => 1, 'PRICE.CATALOG_GROUP_ID' => [24, 25, 26, 27]],
+                        ['PRODUCT.TYPE' => 1, 'PRICE.CATALOG_GROUP_ID' => [ID_BASE_PRICE_B2B, ID_TYPE1_PRICE_B2B, ID_TYPE2_PRICE_B2B, ID_TYPE3_PRICE_B2B],],
                     ]
-                ),
-                'runtime' => array(
+                ],
+                'runtime' => [
                     new \Bitrix\Main\Entity\ReferenceField(
                         'PRICE',
                         '\Bitrix\Catalog\PriceTable',
@@ -316,8 +327,8 @@ class GeneratePriceList
                         '\Bitrix\Iblock\ElementPropertyTable',
                         ['=this.ID' => 'ref.IBLOCK_ELEMENT_ID',]
                     ),
-                ),
-            ))->fetchAll();
+                ],
+            ])->fetchAll();
             $dbProp = \Bitrix\Iblock\PropertyEnumTable::getList(array(
                 'order' => ['ID' => 'asc'],
                 'select' => ['ID', 'PROPERTY_ID', 'VALUE'],
@@ -326,15 +337,20 @@ class GeneratePriceList
             ))->fetchAll();
 
             if ($sectIdsNoPack && $sectIdsPack) {
-                $dbItemsTp = \Bitrix\Iblock\ElementTable::getList(array(
+                $dbItemsTp = \Bitrix\Iblock\ElementTable::getList([
                     'order' => ['TYPE' => 'desc'],
-                    'select' => array('NAME', 'ID', 'ELEM_ID' => 'PARENT_ELEMENT.ID', 'ELEM_NAME' => 'PARENT_ELEMENT.NAME', 'IBLOCK_SECTION_ID' => 'PARENT_ELEMENT.IBLOCK_SECTION_ID', 'PRICE_VALUE' => 'PRICE.PRICE', 'GROUP_ID' => 'PRICE.CATALOG_GROUP_ID', 'TYPE' => 'PRODUCT.TYPE', 'PROP_' => 'PROP',
-                    ),
-                    'filter' => array(
+                    'select' => ['NAME', 'ID', 'ELEM_ID' => 'PARENT_ELEMENT.ID', 'ELEM_NAME' => 'PARENT_ELEMENT.NAME', 'IBLOCK_SECTION_ID' => 'PARENT_ELEMENT.IBLOCK_SECTION_ID', 'PRICE_VALUE' => 'PRICE.PRICE', 'GROUP_ID' => 'PRICE.CATALOG_GROUP_ID', 'TYPE' => 'PRODUCT.TYPE', 'PROP_' => 'PROP',
+                    ],
+                    'filter' => [
                         'IBLOCK_ID' => [93, 94],
                         'ACTIVE' => 'Y',
                         'PARENT_ELEMENT.ACTIVE' => 'Y',
-                        'PRICE.CATALOG_GROUP_ID' => [24, 25, 26, 27],
+                        'PRICE.CATALOG_GROUP_ID' => [ID_BASE_PRICE_B2B, ID_TYPE1_PRICE_B2B, ID_TYPE2_PRICE_B2B, ID_TYPE3_PRICE_B2B],
+
+                        // Фильтруем по свойству "Оптовый сегмент", берем только значение "Да"
+                        'PROP_VALUE' => 84119,
+                        'PROP_IBLOCK_PROPERTY_ID' => 2644,
+
                         [
                             'LOGIC' => 'OR',
                             [
@@ -344,8 +360,8 @@ class GeneratePriceList
                             ],
                             ['IBLOCK_SECTION_ID' => $sectIdsNoPack,],
                         ],
-                    ),
-                    'runtime' => array(
+                    ],
+                    'runtime' => [
                         new \Bitrix\Main\Entity\ReferenceField(
                             'LINK',
                             '\Bitrix\Iblock\ElementPropertyTable',
@@ -371,8 +387,8 @@ class GeneratePriceList
                             '\Bitrix\Iblock\ElementPropertyTable',
                             ['=this.ID' => 'ref.IBLOCK_ELEMENT_ID',]
                         ),
-                    ),
-                ))->fetchAll();
+                    ],
+                ])->fetchAll();
 
                 $arProps = [];
                 foreach ($dbProp as $prop) {
@@ -392,10 +408,10 @@ class GeneratePriceList
                         $arProp[$item['ID']]['IBLOCK_SECTION_ID'] = $item["IBLOCK_SECTION_ID"];
                         $arProp[$item['ID']]['TYPE'] = $item["TYPE"];
 
-                        if ($item['GROUP_ID'] == '24') $arProp[$item['ID']]['PRICE_1'] = $item["PRICE_VALUE"] . ' ₽';
-                        if ($item['GROUP_ID'] == '25') $arProp[$item['ID']]['PRICE_2'] = $item["PRICE_VALUE"] . ' ₽';
-                        if ($item['GROUP_ID'] == '26') $arProp[$item['ID']]['PRICE_3'] = $item["PRICE_VALUE"] . ' ₽';
-                        if ($item['GROUP_ID'] == '27') $arProp[$item['ID']]['PRICE_4'] = $item["PRICE_VALUE"] . ' ₽';
+                        if ($item['GROUP_ID'] == ID_BASE_PRICE_B2B) $arProp[$item['ID']]['PRICE_1'] = $item["PRICE_VALUE"] . ' ₽';
+                        if ($item['GROUP_ID'] == ID_TYPE1_PRICE_B2B) $arProp[$item['ID']]['PRICE_2'] = $item["PRICE_VALUE"] . ' ₽';
+                        if ($item['GROUP_ID'] == ID_TYPE2_PRICE_B2B) $arProp[$item['ID']]['PRICE_3'] = $item["PRICE_VALUE"] . ' ₽';
+                        if ($item['GROUP_ID'] == ID_TYPE3_PRICE_B2B) $arProp[$item['ID']]['PRICE_4'] = $item["PRICE_VALUE"] . ' ₽';
 
                         if ($item['PROP_IBLOCK_PROPERTY_ID'] == '1751') {
                             $arProp[$item['ID']]['ARTICLE'] = $item["PROP_VALUE"];
@@ -417,13 +433,13 @@ class GeneratePriceList
                                 $arProp[$item['ID']]['LABEL'] = [];
                                 switch (mb_strtolower($arProps[1875][$item["PROP_VALUE"]])) {
                                     case 'новинка':
-                                        $arProp[$item['ID']]['LABEL'][] = ['CLASS' => 'green', 'ICON' => 'https://legend-tea.ru/bitrix/templates/b2b/assets/static/img/price_list/green-new.svg', 'TEXT' => 'Новинка'];
+                                        $arProp[$item['ID']]['LABEL'][] = ['CLASS' => 'green', 'ICON' => 'https://shop.legend-tea.ru/bitrix/templates/b2b/assets/static/img/price_list/green-new.svg', 'TEXT' => 'Новинка'];
                                         break;
                                     case 'хит':
-                                        $arProp[$item['ID']]['LABEL'][] = ['CLASS' => 'red', 'ICON' => 'https://legend-tea.ru/bitrix/templates/b2b/assets/static/img/price_list/red-fire.svg', 'TEXT' => 'Хит'];
+                                        $arProp[$item['ID']]['LABEL'][] = ['CLASS' => 'red', 'ICON' => 'https://shop.legend-tea.ru/bitrix/templates/b2b/assets/static/img/price_list/red-fire.svg', 'TEXT' => 'Хит'];
                                         break;
                                     case 'рекомендуем':
-                                        $arProp[$item['ID']]['LABEL'][] = ['CLASS' => 'yellow', 'ICON' => 'https://legend-tea.ru/bitrix/templates/b2b/assets/static/img/price_list/yellow-like.svg', 'TEXT' => 'Советуем'];
+                                        $arProp[$item['ID']]['LABEL'][] = ['CLASS' => 'yellow', 'ICON' => 'https://shop.legend-tea.ru/bitrix/templates/b2b/assets/static/img/price_list/yellow-like.svg', 'TEXT' => 'Советуем'];
                                         break;
                                     default:
                                         break;
@@ -880,7 +896,7 @@ class GeneratePriceList
                 data.append('section', sectId);
                 if(k == document.querySelectorAll('.table_holder').length - 1)  data.append('last_page','Y');
              
-                fetch('https://legend-tea.ru/ajax/upload-price-list.php', {
+                fetch('https://shop.legend-tea.ru/ajax/upload-price-list.php', {
                     method: 'POST',
                     body: data,
                 }).then(response => response.text()).then(result => {  console.log('Success:', result);}).catch(error => { console.error('Error:', error); });
