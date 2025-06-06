@@ -295,7 +295,12 @@ class GeneratePriceList
         if ($sectIDs) {
             $dbItems = \Bitrix\Iblock\ElementTable::getList([
                 'order' => ['NAME' => 'asc'],
-                'select' => ['NAME', 'ID', 'IBLOCK_SECTION_ID', 'TYPE' => 'PRODUCT.TYPE', 'PRICE_VALUE' => 'PRICE.PRICE', 'GROUP_ID' => 'PRICE.CATALOG_GROUP_ID', 'PROP_' => 'PROP',
+                'select' => [
+                    'NAME', 'ID', 'IBLOCK_SECTION_ID',
+                    'TYPE' => 'PRODUCT.TYPE',
+                    'PRICE_VALUE' => 'PRICE.PRICE',
+                    'GROUP_ID' => 'PRICE.CATALOG_GROUP_ID',
+                    'PROP_' => 'PROP',
                 ],
                 'filter' => [
                     'IBLOCK_ID' => 93,
@@ -303,29 +308,45 @@ class GeneratePriceList
                     'IBLOCK_SECTION_ID' => $sectIDs,
 
                     // Фильтруем по свойству "Оптовый сегмент", берем только значение "Да"
-                    'PROP_VALUE' => 84119,
-                    'PROP_IBLOCK_PROPERTY_ID' => 2644,
+                    'SEG.VALUE' => 84119,
+
                     [
                         "LOGIC" => "OR",
-                        ['PRODUCT.TYPE' => 3,],
-                        ['PRODUCT.TYPE' => 1, 'PRICE.CATALOG_GROUP_ID' => [ID_BASE_PRICE_B2B, ID_TYPE1_PRICE_B2B, ID_TYPE2_PRICE_B2B, ID_TYPE3_PRICE_B2B],],
-                    ]
+                        ['PRODUCT.TYPE' => 3],
+                        [
+                            'PRODUCT.TYPE' => 1,
+                            'PRICE.CATALOG_GROUP_ID' => [
+                                ID_BASE_PRICE_B2B,
+                                ID_TYPE1_PRICE_B2B,
+                                ID_TYPE2_PRICE_B2B,
+                                ID_TYPE3_PRICE_B2B,
+                            ],
+                        ],
+                    ],
                 ],
                 'runtime' => [
                     new \Bitrix\Main\Entity\ReferenceField(
                         'PRICE',
                         '\Bitrix\Catalog\PriceTable',
-                        ['=this.ID' => 'ref.PRODUCT_ID'],
+                        ['=this.ID' => 'ref.PRODUCT_ID']
                     ),
                     new \Bitrix\Main\Entity\ReferenceField(
                         'PRODUCT',
                         '\Bitrix\Catalog\ProductTable',
-                        ['=this.ID' => 'ref.ID'],
+                        ['=this.ID' => 'ref.ID']
                     ),
                     new \Bitrix\Main\Entity\ReferenceField(
                         'PROP',
                         '\Bitrix\Iblock\ElementPropertyTable',
-                        ['=this.ID' => 'ref.IBLOCK_ELEMENT_ID',]
+                        ['=this.ID' => 'ref.IBLOCK_ELEMENT_ID']
+                    ),
+                    new \Bitrix\Main\Entity\ReferenceField(
+                        'SEG',
+                        '\Bitrix\Iblock\ElementPropertyTable',
+                        [
+                            '=this.ID' => 'ref.IBLOCK_ELEMENT_ID',
+                            '=ref.IBLOCK_PROPERTY_ID' => new \Bitrix\Main\DB\SqlExpression('?i', 2644),
+                        ]
                     ),
                 ],
             ])->fetchAll();
