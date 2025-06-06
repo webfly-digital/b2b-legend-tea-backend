@@ -307,11 +307,11 @@ class GeneratePriceList
                     'ACTIVE' => 'Y',
                     'IBLOCK_SECTION_ID' => $sectIDs,
 
-                    // Фильтруем по свойству "Оптовый сегмент", берем только значение "Да"
-                    'SEG.VALUE' => 84119,
+                    // Фильтруем по "Оптовый сегмент" (ИБ 93)
+                    'SEG93.VALUE' => 84119,
 
                     [
-                        "LOGIC" => "OR",
+                        'LOGIC' => 'OR',
                         ['PRODUCT.TYPE' => 3],
                         [
                             'PRODUCT.TYPE' => 1,
@@ -341,36 +341,48 @@ class GeneratePriceList
                         ['=this.ID' => 'ref.IBLOCK_ELEMENT_ID']
                     ),
                     new \Bitrix\Main\Entity\ReferenceField(
-                        'SEG',
-                        '\Bitrix\Iblock\ElementPropertyTable',
-                        [
-                            '=this.ID' => 'ref.IBLOCK_ELEMENT_ID',
-                            '=ref.IBLOCK_PROPERTY_ID' => new \Bitrix\Main\DB\SqlExpression('?i', 2644),
-                        ]
-                    ),
+                        'SEG93',
+                                '\Bitrix\Iblock\ElementPropertyTable',
+                                [
+                                    '=this.ID' => 'ref.IBLOCK_ELEMENT_ID',
+                                    '=ref.IBLOCK_PROPERTY_ID' => new \Bitrix\Main\DB\SqlExpression('?i', 2644),
+                                ]
+                            ),
                 ],
             ])->fetchAll();
-            $dbProp = \Bitrix\Iblock\PropertyEnumTable::getList(array(
+
+            $dbProp = \Bitrix\Iblock\PropertyEnumTable::getList([
                 'order' => ['ID' => 'asc'],
                 'select' => ['ID', 'PROPERTY_ID', 'VALUE'],
-                'filter' => ['PROPERTY_ID' => ['2170', '2172', '1767', '1875'],]
-
-            ))->fetchAll();
+                'filter' => ['PROPERTY_ID' => ['2170', '2172', '1767', '1875']],
+            ])->fetchAll();
 
             if ($sectIdsNoPack && $sectIdsPack) {
                 $dbItemsTp = \Bitrix\Iblock\ElementTable::getList([
                     'order' => ['TYPE' => 'desc'],
-                    'select' => ['NAME', 'ID', 'ELEM_ID' => 'PARENT_ELEMENT.ID', 'ELEM_NAME' => 'PARENT_ELEMENT.NAME', 'IBLOCK_SECTION_ID' => 'PARENT_ELEMENT.IBLOCK_SECTION_ID', 'PRICE_VALUE' => 'PRICE.PRICE', 'GROUP_ID' => 'PRICE.CATALOG_GROUP_ID', 'TYPE' => 'PRODUCT.TYPE', 'PROP_' => 'PROP',
+                    'select' => [
+                        'NAME', 'ID',
+                        'ELEM_ID' => 'PARENT_ELEMENT.ID',
+                        'ELEM_NAME' => 'PARENT_ELEMENT.NAME',
+                        'IBLOCK_SECTION_ID' => 'PARENT_ELEMENT.IBLOCK_SECTION_ID',
+                        'PRICE_VALUE' => 'PRICE.PRICE',
+                        'GROUP_ID' => 'PRICE.CATALOG_GROUP_ID',
+                        'TYPE' => 'PRODUCT.TYPE',
+                        'PROP_' => 'PROP',
                     ],
                     'filter' => [
                         'IBLOCK_ID' => [93, 94],
                         'ACTIVE' => 'Y',
                         'PARENT_ELEMENT.ACTIVE' => 'Y',
-                        'PRICE.CATALOG_GROUP_ID' => [ID_BASE_PRICE_B2B, ID_TYPE1_PRICE_B2B, ID_TYPE2_PRICE_B2B, ID_TYPE3_PRICE_B2B],
+                        'PRICE.CATALOG_GROUP_ID' => [
+                            ID_BASE_PRICE_B2B,
+                            ID_TYPE1_PRICE_B2B,
+                            ID_TYPE2_PRICE_B2B,
+                            ID_TYPE3_PRICE_B2B,
+                        ],
 
-                        // Фильтруем по свойству "Оптовый сегмент", берем только значение "Да"
-                        'PROP_VALUE' => 84119,
-                        'PROP_IBLOCK_PROPERTY_ID' => 2644,
+                        // Фильтруем по "Оптовый сегмент" (ИБ 94)
+                        'SEG94.VALUE' => 148665,
 
                         [
                             'LOGIC' => 'OR',
@@ -379,34 +391,42 @@ class GeneratePriceList
                                 'PROP_IBLOCK_PROPERTY_ID' => 1812,
                                 'PROP_VALUE' => 5856 // ИД  значения списка 1000г
                             ],
-                            ['IBLOCK_SECTION_ID' => $sectIdsNoPack,],
+                    ['IBLOCK_SECTION_ID' => $sectIdsNoPack],
                         ],
                     ],
                     'runtime' => [
                         new \Bitrix\Main\Entity\ReferenceField(
                             'LINK',
                             '\Bitrix\Iblock\ElementPropertyTable',
-                            ['=this.ID' => 'ref.IBLOCK_ELEMENT_ID',]
+                            ['=this.ID' => 'ref.IBLOCK_ELEMENT_ID']
                         ),
                         new \Bitrix\Main\Entity\ReferenceField(
                             'PARENT_ELEMENT',
                             '\Bitrix\Iblock\ElementTable',
-                            ['=this.LINK.VALUE' => 'ref.ID',]
+                            ['=this.LINK.VALUE' => 'ref.ID']
                         ),
                         new \Bitrix\Main\Entity\ReferenceField(
                             'PRICE',
                             '\Bitrix\Catalog\PriceTable',
-                            ['=this.ID' => 'ref.PRODUCT_ID'],
+                            ['=this.ID' => 'ref.PRODUCT_ID']
                         ),
                         new \Bitrix\Main\Entity\ReferenceField(
                             'PRODUCT',
                             '\Bitrix\Catalog\ProductTable',
-                            ['=this.ID' => 'ref.ID'],
+                            ['=this.ID' => 'ref.ID']
                         ),
                         new \Bitrix\Main\Entity\ReferenceField(
                             'PROP',
                             '\Bitrix\Iblock\ElementPropertyTable',
-                            ['=this.ID' => 'ref.IBLOCK_ELEMENT_ID',]
+                            ['=this.ID' => 'ref.IBLOCK_ELEMENT_ID']
+                        ),
+                        new \Bitrix\Main\Entity\ReferenceField(
+                            'SEG94',
+                            '\Bitrix\Iblock\ElementPropertyTable',
+                            [
+                                '=this.ID' => 'ref.IBLOCK_ELEMENT_ID',
+                                '=ref.IBLOCK_PROPERTY_ID' => new \Bitrix\Main\DB\SqlExpression('?i', 3588),
+                            ]
                         ),
                     ],
                 ])->fetchAll();
