@@ -8,11 +8,25 @@ $aMenuLinks = Array(
 		"" 
 	),
 	Array(
-		"Каталог",
-		"/catalog/",
-		Array(),
-		Array(),
-		""
+		"Каталог", 
+		"/catalog/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Избранное", 
+		"/favorites/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Прайс-лист", 
+		"/doc/price-list/", 
+		Array(), 
+		Array(), 
+		"" 
 	),
 	Array(
 		"Заказы", 
