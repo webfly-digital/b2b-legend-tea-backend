@@ -121,6 +121,9 @@ class Agent
     // 3) очень странные поля в методе ( дважды $example) и непонятно зачем
     // 4) ну и в классе GeneratePriceList нет метода agent
     // Таким образом это очень похоже на мёртвый и неверный код.
+    // UPD: не отменяя вышесказанного, агент на кроне всё же есть, но этот агент лежит здесь:
+    // shop.legend-tea.ru/cron/generatePriceList.php - т.е. в папке второго сайта,
+    // а то, что ниже похоже действительно не нужно.
     public static function agentGeneratePriceList($type)
     {
         $example = new \Webfly\Generate\GeneratePriceList();
