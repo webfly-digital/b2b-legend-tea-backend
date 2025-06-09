@@ -8,6 +8,7 @@ use Bitrix\Main\LoaderException;
 use CSaleOrderUserProps;
 use CSaleOrderUserPropsValue;
 use CUser;
+use \Webfly\Helper\User;
 
 
 \Bitrix\Main\Loader::includeModule('crm');
@@ -365,8 +366,23 @@ class Buyer
     {
         $dataUserTo1C = $arFieldsUser; // массив отвечает за данные для 1с
         $dataRequest = $request->getPostList()->toArray(); //пост запрос с формы
+
+        // Не шлём в 1С, если у пользователя уже заполнен GUID
+        $userId = (int)$arFieldsUser['USER_ID'];
+        $skip1C = false;
+        $guidUser = '';
+        if ($userId) {
+            $u = \CUser::GetByID($userId)->Fetch();
+            if (!empty($u['UF_CONTACT_GUID'])) {
+                $skip1C = true;
+                $guidUser = $u['UF_CONTACT_GUID'];
+            }
+        }
+        if (!$skip1C) sleep(5);  // Задержка 5 секунд перед обращением к 1С
+
         $individual = empty($dataRequest['COMPANY']) && !empty($dataRequest['INDIVIDUAL']) ? true : false;
 
+        //todo: у нас класс родитель обращается к потомку - это очень плохо! Родитель и не должен знать о потомке! Это не SOLID и вообще не ООП!
         $objProfile = new Profile($individual);
         $objProfile->setNameProfile($arFieldsUser, $dataRequest['COMPANY']);
         $objProfile->addProfileBuyer($arFieldsUser['USER_ID']);
@@ -391,14 +407,18 @@ class Buyer
         $objProfile->addPropsProfileBuyer();
         $objProfile->arrayTo1C($dataUserTo1C);
 
-        $res1C = \Webfly\Helper\User::uploadUserAndProfile($dataUserTo1C);
+        if (!$skip1C) {
+            $res1C = User::uploadUserAndProfile($dataUserTo1C);
 
-        $guidProfile = self::getGuidFrom1C($res1C);
-        if ($guidProfile) $objProfile->updatePropCodeGuid($guidProfile);
+            $guidProfile = self::getGuidFrom1C($res1C);
+            if ($guidProfile) {
+                $objProfile->updatePropCodeGuid($guidProfile);
+            }
 
-        $guidUser = \Webfly\Helper\User::getGuidFrom1C($res1C);
+            $guidUser = User::getGuidFrom1C($res1C);
+        }
 
-        \Webfly\Helper\User::updateFieldsProfileAndGuid($arFieldsUser['USER_ID'], $objProfile->idProfile, $guidUser, $arFieldsUser); //протягивает $arFields, чтобы заполнить его гуид, и прис оздании контактв передать данный гуид
+        User::updateFieldsProfileAndGuid($arFieldsUser['USER_ID'], $objProfile->idProfile, $guidUser, $arFieldsUser); //протягивает $arFields, чтобы заполнить его гуид, и при создании контакта передать данный гуид
     }
 
 

@@ -27,8 +27,53 @@ class Rest
                     'callback' => array(__CLASS__, 'reconnectingProfile'),
                     'options' => array(),
                 ),
+                'rest.connecting.profile.order' => array(
+                    'callback' => array(__CLASS__, 'connectingProfileToOrder'),
+                    'options' => array(),
+                ),
             )
         );
+    }
+
+    public static function connectingProfileToOrder($dataRequest)
+    {
+        if (!$dataRequest['ORDER_ID'])
+            throw new \Bitrix\Rest\RestException('ORDER_ID empty', 'ERROR_CODE',);
+
+        if (!$dataRequest['PROFILE_ID'])
+            throw new \Bitrix\Rest\RestException('PROFILE_ID empty', 'ERROR_CODE',);
+
+        $guidProfile = '';
+        $companyID = 0;
+
+        $OrderBX = \Bitrix\Sale\Order::load($dataRequest['ORDER_ID']);
+        $ProfileProps = \CSaleOrderUserPropsValue::GetList(array("ID" => "ASC"), array("USER_PROPS_ID" => $dataRequest['PROFILE_ID']));
+        $propertyCollection = $OrderBX->getPropertyCollection();
+        while ($arProfileProps = $ProfileProps->Fetch()) {
+            $somePropValue = $propertyCollection->getItemByOrderPropertyId(intval($arProfileProps['PROP_ID']));
+
+            if (!empty($arProfileProps['VALUE'])) {
+                $somePropValue->setValue($arProfileProps['VALUE']);
+                if (!empty($somePropValue['PROP_CODE']) == 'COMPANY_UF_CRM_1724146140') $guidProfile = $arProfileProps['VALUE'];
+            }
+        }
+
+        $OrderBX->save();
+
+        $resDeal = \Bitrix\Crm\Binding\OrderEntityTable::getOwnerByOrderId($dataRequest['ORDER_ID']);
+        $dealID = $resDeal["OWNER_ID"];
+        if (!empty($guidProfile)) {
+            $resCompany = \Bitrix\Crm\CompanyTable::getList([
+                'filter' => ['UF_CRM_1724146140' => $guidProfile],
+                'select' => ['ID', 'TITLE',],
+            ]);
+            while ($ob_company = $resCompany->fetch()) {
+                $companyID = $ob_company['ID'];
+            }
+
+        }
+
+
     }
 
     public static function reconnectingProfile($dataRequest)
