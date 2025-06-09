@@ -1,4 +1,5 @@
-<? require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
+<?php
+require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("Легенда Чая B2B"); ?>
 <div class="three-cols-table-container">
     <div class="left">
