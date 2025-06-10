@@ -12,25 +12,27 @@
 
         <? if ($arItem["IS_PARENT"]): ?>
 
-            <div class="block <?=$arItem['PARAMS']['class']?> <?=$arItem["SELECTED"]?'active':''?>">
-                <div class="drop-block">
-                    <div class="icon-link">
-                        <div class="icon <?=$arItem['PARAMS']['icon']?>"></div>
-                        <span>Профиль</span>
-                        <div class="icon icon-arrow-down"></div>
-                    </div>
-                    <div class="drop">
+            <div class="block <?= $arItem['PARAMS']['class'] ?> <?= $arItem["SELECTED"] ? 'active' : '' ?>">
+            <div class="drop-block">
+            <div class="icon-link">
+                <span class="suptitle"><?= $arItem["TEXT"] ?></span>
+                <div class="icon <?= $arItem['PARAMS']['icon'] ?>"></div>
+                <span><?= $arParams['NAME_USER'] ?></span>
+                <div class="icon icon-arrow-down"></div>
+            </div>
+            <div class="drop">
         <? else: ?>
 
             <? if ($arItem["DEPTH_LEVEL"] == 1): ?>
-                <div class="block <?=$arItem['PARAMS']['class']?> <?=$arItem["SELECTED"]?'active':''?>">
+                <div class="block <?= $arItem['PARAMS']['class'] ?> <?= $arItem["SELECTED"] ? 'active' : '' ?>">
                     <a href="<?= $arItem["LINK"] ?>" class="icon-link">
-                        <div class="icon <?=$arItem['PARAMS']['icon']?>"></div>
+                        <div class="icon <?= $arItem['PARAMS']['icon'] ?>"></div>
                         <span><?= $arItem["TEXT"] ?></span>
                     </a>
                 </div>
             <? else: ?>
-               <a href="<?= $arItem["LINK"] ?>" class="<?=$arItem["SELECTED"]?'active':''?>"><?= $arItem["TEXT"] ?></a>
+                <a href="<?= $arItem["LINK"] ?>"
+                   class="<?= $arItem["SELECTED"] ? 'active' : '' ?>"><?= $arItem["TEXT"] ?></a>
             <? endif ?>
 
         <? endif ?>
