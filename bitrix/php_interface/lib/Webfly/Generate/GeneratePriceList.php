@@ -474,13 +474,13 @@ class GeneratePriceList
                                 $arProp[$item['ID']]['LABEL'] = [];
                                 switch (mb_strtolower($arProps[1875][$item["PROP_VALUE"]])) {
                                     case 'новинка':
-                                        $arProp[$item['ID']]['LABEL'][] = ['CLASS' => 'green', 'ICON' => 'https://shop.legend-tea.ru/bitrix/templates/b2b/assets/static/img/price_list/green-new.svg', 'TEXT' => 'Новинка'];
+                                        $arProp[$item['ID']]['LABEL'][] = ['CLASS' => 'green', 'ICON' => 'https://shop.legend-tea.ru/bitrix/templates/b2b/assets/static/img/icon/green-new.svg', 'TEXT' => 'Новинка'];
                                         break;
                                     case 'хит':
-                                        $arProp[$item['ID']]['LABEL'][] = ['CLASS' => 'red', 'ICON' => 'https://shop.legend-tea.ru/bitrix/templates/b2b/assets/static/img/price_list/red-fire.svg', 'TEXT' => 'Хит'];
+                                        $arProp[$item['ID']]['LABEL'][] = ['CLASS' => 'red', 'ICON' => 'https://shop.legend-tea.ru/bitrix/templates/b2b/assets/static/img/icon/red-fire.svg', 'TEXT' => 'Хит'];
                                         break;
                                     case 'рекомендуем':
-                                        $arProp[$item['ID']]['LABEL'][] = ['CLASS' => 'yellow', 'ICON' => 'https://shop.legend-tea.ru/bitrix/templates/b2b/assets/static/img/price_list/yellow-like.svg', 'TEXT' => 'Советуем'];
+                                        $arProp[$item['ID']]['LABEL'][] = ['CLASS' => 'yellow', 'ICON' => 'https://shop.legend-tea.ru/bitrix/templates/b2b/assets/static/img/icon/yellow-like.svg', 'TEXT' => 'Советуем'];
                                         break;
                                     default:
                                         break;
