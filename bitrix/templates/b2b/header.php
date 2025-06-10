@@ -3,9 +3,11 @@ IncludeTemplateLangFile(__FILE__);
 
 use Bitrix\Main\Page\Asset;
 
-global $USER;
-$fields['USER_ID'] = $USER->GetId();
-\Webfly\Handlers\Main::OnAfterUserLoginHandler($fields);
+
+if (array_key_exists('REQUEST_1C', $_REQUEST) && !empty($_REQUEST["REQUEST_1C"])) { //устанавливаем json , если запрос из 1С
+    header('Content-Type: application/json; charset=utf-8');
+    return;
+}
 
 ?>
 <!DOCTYPE html>
@@ -16,13 +18,9 @@ $fields['USER_ID'] = $USER->GetId();
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="shortcut icon" href="/favicon.png" type="image/png">
     <?
-
     global $USER;
-    if ($USER->GetID() == 2389) {
-        Asset::getInstance()->addCss(SITE_TEMPLATE_PATH . "/admin_assets/style/style.css");
-    } else {
-        Asset::getInstance()->addCss(SITE_TEMPLATE_PATH . "/assets/style/style.css");
-    } ?>
+    if ($USER->GetID() == 2389) Asset::getInstance()->addCss(SITE_TEMPLATE_PATH . "/assets_new/style/style.css");
+    else    Asset::getInstance()->addCss(SITE_TEMPLATE_PATH . "/assets/style/style.css"); ?>
     <? $APPLICATION->ShowHead(); ?>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"/>
     <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
@@ -75,6 +73,9 @@ $fields['USER_ID'] = $USER->GetId();
             <?php
             if ($USER->IsAuthorized()):?>
                 <?
+                if (!CSite::InDir('/personal/order/make/')) $APPLICATION->IncludeComponent('webfly:profile.list', '', []);
+                ?>
+                <?
                 $APPLICATION->IncludeComponent("bitrix:menu", "header", array(
                     "COMPONENT_TEMPLATE" => "horizontal_multilevel",
                     "ROOT_MENU_TYPE" => "header",    // Тип меню для первого уровня
@@ -88,36 +89,12 @@ $fields['USER_ID'] = $USER->GetId();
                     "DELAY" => "N",    // Откладывать выполнение шаблона меню
                     "ALLOW_MULTI_SELECT" => "N",    // Разрешить несколько активных пунктов одновременно
                     "COMPOSITE_FRAME_MODE" => "A",    // Голосование шаблона компонента по умолчанию
-                    "COMPOSITE_FRAME_TYPE" => "AUTO",    // Содержимое компонента
+                    "COMPOSITE_FRAME_TYPE" => "AUTO",    // Содержимое компонента,
+                    "NAME_USER" => $USER->GetFullName(),    // Содержимое компонента,
                 ),
                     false
                 );
                 ?>
-                <?php
-                if (!CSite::InDir('/personal/order/make/')):?>
-                    <? $APPLICATION->IncludeComponent("bitrix:sale.basket.basket.line", "small", array(
-                        "COMPONENT_TEMPLATE" => ".default",
-                        "PATH_TO_BASKET" => SITE_DIR . "personal/cart/",    // Страница корзины
-                        "PATH_TO_ORDER" => SITE_DIR . "personal/order/make/",    // Страница оформления заказа
-                        "SHOW_NUM_PRODUCTS" => "N",    // Показывать количество товаров
-                        "SHOW_TOTAL_PRICE" => "Y",    // Показывать общую сумму по товарам
-                        "SHOW_EMPTY_VALUES" => "N",    // Выводить нулевые значения в пустой корзине
-                        "SHOW_PERSONAL_LINK" => "N",    // Отображать персональный раздел
-                        "PATH_TO_PERSONAL" => SITE_DIR . "personal/",    // Страница персонального раздела
-                        "SHOW_AUTHOR" => "N",    // Добавить возможность авторизации
-                        "PATH_TO_AUTHORIZE" => "",    // Страница авторизации
-                        "SHOW_REGISTRATION" => "N",    // Добавить возможность регистрации
-                        "PATH_TO_REGISTER" => SITE_DIR . "login/",    // Страница регистрации
-                        "PATH_TO_PROFILE" => SITE_DIR . "personal/",    // Страница профиля
-                        "SHOW_PRODUCTS" => "N",    // Показывать список товаров
-                        "POSITION_FIXED" => "N",    // Отображать корзину поверх шаблона
-                        "HIDE_ON_BASKET_PAGES" => "Y",    // Не показывать на страницах корзины и оформления заказа
-                        "COMPOSITE_FRAME_MODE" => "A",    // Голосование шаблона компонента по умолчанию
-                        "COMPOSITE_FRAME_TYPE" => "AUTO",    // Содержимое компонента
-                    ),
-                        false
-                    ); ?>
-                <? endif ?>
             <? endif ?>
         </div>
     </div>

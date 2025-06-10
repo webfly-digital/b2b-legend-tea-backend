@@ -6,16 +6,44 @@ global $USER;
 use Bitrix\Main\Page\Asset;
 
 global $USER;
-$modeAdmin = false;
-$session = \Bitrix\Main\Application::getInstance()->getSession();
-if ($session->has('mode') && $session['mode'] == '21232f297a57a5a743894a0e4a801fc3' || $USER->isAdmin() || in_array(24, $USER->GetUserGroupArray())) $modeAdmin = true;
-
-
 ?>
-<? if ($modeAdmin && CSite::InDir('/catalog/')) : ?>
-    <div class="cart-toggler mobile-cart"></div>
-<? endif; ?>
+
 </main>
+
+<?
+if (!CSite::InDir('/personal/private/') && !CSite::InDir('/personal/change-password/') && !CSite::InDir('/personal/profiles/') && !CSite::InDir('/personal/order/make/')):
+    $APPLICATION->IncludeComponent("bitrix:sale.basket.basket.line", "button", array(
+        "HIDE_ON_BASKET_PAGES" => "Y",
+        "PATH_TO_BASKET" => SITE_DIR . "personal/cart/",
+        "PATH_TO_ORDER" => SITE_DIR . "personal/order/make/",
+        "PATH_TO_PERSONAL" => SITE_DIR . "personal/",
+        "PATH_TO_PROFILE" => SITE_DIR . "personal/",
+        "PATH_TO_REGISTER" => SITE_DIR . "login/",
+        "POSITION_FIXED" => "Y",
+        "POSITION_HORIZONTAL" => "right",
+        "POSITION_VERTICAL" => "top",
+        "SHOW_AUTHOR" => "N",
+        "SHOW_DELAY" => "N",
+        "SHOW_EMPTY_VALUES" => "Y",
+        "SHOW_IMAGE" => "N",
+        "SHOW_NOTAVAIL" => "N",
+        "SHOW_NUM_PRODUCTS" => "Y",
+        "SHOW_PERSONAL_LINK" => "N",
+        "SHOW_PRICE" => "Y",
+        "SHOW_PRODUCTS" => "Y",
+        "SHOW_SUMMARY" => "Y",
+        "SHOW_TOTAL_PRICE" => "Y",
+        "COMPONENT_TEMPLATE" => "store_v3",
+        "PATH_TO_AUTHORIZE" => "",
+        "SHOW_REGISTRATION" => "N",
+        "COMPOSITE_FRAME_MODE" => "A",
+        "COMPOSITE_FRAME_TYPE" => "AUTO"
+    ),
+        false
+    );
+endif;
+?>
+
 <footer class="<? $APPLICATION->ShowProperty("template_class") ?>">
     <div class="left">
         <div class="item">
@@ -80,11 +108,11 @@ if ($session->has('mode') && $session['mode'] == '21232f297a57a5a743894a0e4a801f
         false
     );
     ?>
-<? endif; ?>
+
 
 <?php
-if (!CSite::InDir('/personal/order/make/')):?>
-    <div class="cart">
+if (!CSite::InDir('/personal/order/make/') &&!CSite::InDir('/personal/') ):?>
+    <div class="cart new desktop-visible">
         <? $APPLICATION->IncludeComponent(
             "bitrix:sale.basket.basket.line",
             "slide",
@@ -119,16 +147,15 @@ if (!CSite::InDir('/personal/order/make/')):?>
         ); ?>
     </div>
 <? endif ?>
+<? endif; ?>
 <?
 
-
 global $USER;
-if ($USER->GetID() == 2389) {
-    Asset::getInstance()->addJs(SITE_TEMPLATE_PATH . "/admin_assets/script/script.js");
-} else {
-    Asset::getInstance()->addJs(SITE_TEMPLATE_PATH . "/assets/script/script.js");
-}
- ?>
+if($USER->GetID() == 2389){
+    Asset::getInstance()->addJs(SITE_TEMPLATE_PATH . "/assets_new/script/script.js");
+}else Asset::getInstance()->addJs(SITE_TEMPLATE_PATH . "/assets/script/script.js");
+
+?>
 <? Asset::getInstance()->addJs(SITE_TEMPLATE_PATH . "/script.js"); ?>
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
