@@ -159,12 +159,19 @@ class Sale
     {
         $order = $event->getParameter("ENTITY");
         $values = $event->getParameter("VALUES");
+
         if (!$order) return;
 
         $orderId = $order->getId();
         $statusId = $order->getField('STATUS_ID');
 
         if ($orderId == 0) {
+
+            $request = \Bitrix\Main\Application::getInstance()->getContext()->getRequest();
+            if (!empty($request->get('PROFILE_ID')))
+                \Webfly\Helper\Order::FillOrderPropsFromProfileId($request->get('PROFILE_ID'), $order);
+
+
             if (!empty($order->getField("COMMENTS")) && empty($values['COMMENTS'])) {
                 $idProfile = $order->getField("COMMENTS");
                 $propertyCollection = $order->getPropertyCollection();
@@ -195,16 +202,6 @@ class Sale
 
         $siteId = $order->getSiteId();
 
-//        $badStatuses = ['P', 'OO', 'L', 'O', 'I', 'Z'];
-//
-//        if (in_array($statusId, $badStatuses)){
-//            return new \Bitrix\Main\EventResult(
-//                \Bitrix\Main\EventResult::ERROR,
-//                \Bitrix\Sale\ResultError::create(new \Bitrix\Main\Error("Нельзя перевести заказ в статус {$statusId}"))
-//            );
-//        }
-
-
         if ($statusId != $curOrderStatusId) {//статус заказа изменился
             /**
              * Меняем статус в Б24
@@ -215,72 +212,6 @@ class Sale
              */
             if ($statusId == B2B_PAY_STATUS && $siteId == 's3')
                 self::SendB2bPay($order);
-            /**
-             * Меняем статус заказа на нужный
-             */
-//            $map = [
-//                's3' => [
-//                    'N' => 'N',//Согласование
-//                    'PO' => 'N',//Предоплата до обеспечения
-//                    'S' => 'N',//Готов к обеспечению
-//
-//                    'VO' => 'VR',//В процессе обеспечения
-//
-//                    'PS' => 'N',//Предоплата до сборки
-//
-//                    'GS' => 'VR',//Готов к сборке
-//
-//                    'VS' => 'VS',//В процессе сборки
-//                    'OP' => 'VS',//Ожидается проверка
-//                    'PT' => 'VS',//Проверяется
-//                    'PR' => 'VS',//Проверен, ожидается оплата
-//                    'PG' => 'VS',//Проверен готов к отгрузке
-//
-//                    'VD' => 'VD',//В доставке
-//                    'DO' => 'VD',//В доставке, оплата при получении
-//                    'OG' => 'VD',//Оплата после отгрузки
-//
-//                    'F' => 'F',//Выполнен
-//                    'D' => 'D',//Отменен
-//
-//                ],
-//                's1' => [
-//                    'N' => 'J',//Согласование
-//                    'PO' => 'J',//Предоплата до обеспечения
-//                    'S' => 'VS',//Готов к обеспечению
-//
-//                    'VO' => 'VS',//В процессе обеспечения
-//
-//                    'PS' => 'J',//Предоплата до сборки
-//
-//                    'GS' => 'VS',//Готов к сборке
-//
-//                    'VS' => 'VS',//В процессе сборки
-//                    'OP' => 'VS',//Ожидается проверка
-//                    'PT' => 'VS',//Проверяется
-//                    'PR' => 'VS',//Проверен, ожидается оплата
-//                    'PG' => 'VS',//Проверен готов к отгрузке
-//
-//                    'VD' => 'VD',//В доставке
-//                    'DO' => 'VD',//В доставке, оплата при получении
-//                    'OG' => 'VD',//Оплата после отгрузки
-//
-//                    'F' => 'F',//Выполнен
-//                    'D' => 'D',//Отменен
-//                ]
-//            ];
-//            $statuses = $map[$siteId];
-//            if ($statuses) {
-//                $newStatus = $statuses[$statusId];
-//                if ($newStatus && $statusId && $statusId != $newStatus) {
-//                    $order->setField("STATUS_ID", $newStatus);
-//                    $event->addResult(
-//                        new \Bitrix\Main\EventResult(
-//                            \Bitrix\Main\EventResult::SUCCESS, $order
-//                        )
-//                    );
-//                }
-//            }
         }
     }
 

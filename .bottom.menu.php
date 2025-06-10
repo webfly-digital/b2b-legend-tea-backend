@@ -14,13 +14,13 @@ $aMenuLinks = Array(
 		Array("icon"=>"icon-mobile-catalog", "nolink"=>"yes"), 
 		"" 
 	),
-	Array(
-		"Корзина", 
-		"/personal/order/make/", 
-		Array(), 
-		Array("icon"=>"icon-info"), 
-		"" 
-	),
+    Array(
+        "Заказы",
+        "/personal/orders/",
+        Array(),
+        Array("icon"=>"icon-orders"),
+        ""
+    ),
 	Array(
 		"Избранное", 
 		"/favorites/", 

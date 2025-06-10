@@ -6,6 +6,16 @@ $APPLICATION->SetTitle("Авторизация");
 $userName = $USER->GetFullName();
 if (!$userName)
     $userName = $USER->GetLogin();
+
+
+if (array_key_exists('REQUEST_1C', $_REQUEST) && !empty($_REQUEST["REQUEST_1C"])) { //возввращаем json ответ, если запрос из 1С
+    $arResult['TYPE'] = 'SUCCESS';
+    $arResult['MESSAGE']['USER_ID'] = $USER->getId();
+    $arResult['MESSAGE']['PROFILE_ID'] = \Webfly\Helper\Functions::getFirstProfileBuyer($USER->getId())['ID'];
+    echo(json_encode($arResult));
+    die;
+}
+
 ?>
 <div class="reg-done">
     <div class="container-size-2">

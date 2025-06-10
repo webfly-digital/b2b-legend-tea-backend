@@ -1,0 +1,22 @@
+User-agent: *
+Allow: /
+Crawl-delay:3
+sitemap:http://b2b.legend-tea.ru/sitemap.xml
+sitemap:http://b2b.legend-tea.ru/sitemapindex.xml
+sitemap:http://b2b.legend-tea.ru/sitemapmobileindex.xml
+sitemap:http://b2b.legend-tea.ru/sitemap-hot-2996999.xml
+sitemap:http://b2b.legend-tea.ru/sitemap-hot-2994999.xml
+sitemap:http://b2b.legend-tea.ru/sitemap-hot-2992999.xml
+sitemap:http://b2b.legend-tea.ru/sitemap-hot-2990999.xml
+sitemap:http://b2b.legend-tea.ru/sitemap-hot-2988999.xml
+sitemap:http://b2b.legend-tea.ru/sitemap-hot-2986999.xml
+sitemap:http://b2b.legend-tea.ru/sitemap-hot-2984999.xml
+sitemap:http://b2b.legend-tea.ru/sitemap-hot-2982999.xml
+sitemap:http://b2b.legend-tea.ru/sitemap-hot-2980999.xml
+sitemap:http://b2b.legend-tea.ru/sitemap-hot-2978999.xml
+sitemap:http://b2b.legend-tea.ru/sitemap-hot-2976999.xml
+sitemap:http://b2b.legend-tea.ru/sitemap-hot-2974999.xml
+sitemap:http://b2b.legend-tea.ru/sitemap-hot-2972999.xml
+sitemap:http://b2b.legend-tea.ru/sitemap-hot-2970999.xml
+sitemap:http://b2b.legend-tea.ru/sitemap-hot-2968999.xml
+sitemap:http://b2b.legend-tea.ru/sitemap-hot-2966999.xml

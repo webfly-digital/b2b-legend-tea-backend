@@ -9,6 +9,8 @@ bitrix/components/*
 bitrix/php_interface/*
 !bitrix/templates/
 bitrix/templates/*
+!bitrix/modules/
+bitrix/modules/*
 
 # Исключаем конкретные файлы и папки внутри components
 !bitrix/components/bxmaker/
@@ -28,3 +30,6 @@ bitrix/templates/*
 
 # Исключаем папку templates/b2b
 !bitrix/templates/b2b/
+
+# Исключаем модуль Aspro Max
+!bitrix/modules/aspro.max/

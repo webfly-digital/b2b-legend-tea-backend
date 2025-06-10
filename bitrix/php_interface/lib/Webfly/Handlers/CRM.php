@@ -13,6 +13,14 @@ Loader::includeModule('catalog');
 class CRM
 {
 
+    public static function OnAfterCrmCompanyAddHandler(&$arFields){
+
+    }
+
+    public static function OnBeforeCrmCompanyAddHandler(&$arFields){
+
+    }
+
     public static function OnAfterCrmDealAddHandler(&$arFields)
     {
         self::changeSelectedAddressReq($arFields);
@@ -388,6 +396,7 @@ class CRM
 
     public static function OnAfterCrmContactAddHandler(&$arFields) //https://webfly.bitrix24.ru/company/personal/user/298/tasks/task/view/25093/
     {
+
         if ($arFields['SOURCE_ID'] == 'WEBFORM' && $arFields['WEBFORM_ID'] == '27') {
             $newUser['LOGIN'] = $newUser['PHONE_NUMBER'] = $newUser['PERSONAL_PHONE'] = current($arFields['FM']['PHONE']) ['VALUE'];
             $newUser['NAME'] = $arFields['NAME'];
