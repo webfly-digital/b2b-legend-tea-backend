@@ -13,7 +13,7 @@ class RequestTo1C
     public $httpClient = [];
     public $url = '';
     const URL_USER = 'https://1c.legend-tea.ru/legenda_b24/hs/bitrix24/';
-    public $writeLog = true;
+    public $writeLog = false;
 
     public function __construct()
     {
