@@ -367,17 +367,28 @@ class Buyer
         $dataUserTo1C = $arFieldsUser; // массив отвечает за данные для 1с
         $dataRequest = $request->getPostList()->toArray(); //пост запрос с формы
 
+        \Bitrix\Main\Diag\Debug::dumpToFile($dataUserTo1C,date("Y-m-d H:i:s") . ' $dataUserTo1C', '/logs/log1.txt');
         // Не шлём в 1С, если у пользователя уже заполнен GUID
         $userId = (int)$arFieldsUser['USER_ID'];
         $skip1C = false;
         $guidUser = '';
-        if ($userId) {
+
+        // todo: Я тут перестраховался. Скорее всего тянуть из базы - это лишнее. Уточнить.
+        // 1. Проверяем сначала прилетевшие данные
+        if (!empty($arFieldsUser['UF_CONTACT_GUID'])) {
+            $skip1C = true;
+            $guidUser = $arFieldsUser['UF_CONTACT_GUID'];
+        }
+
+        // 2. Только если пусто — тянем из базы
+        if (!$skip1C && $userId) {
             $u = \CUser::GetByID($userId)->Fetch();
             if (!empty($u['UF_CONTACT_GUID'])) {
                 $skip1C = true;
                 $guidUser = $u['UF_CONTACT_GUID'];
             }
         }
+
         if (!$skip1C) sleep(5);  // Задержка 5 секунд перед обращением к 1С
 
         $individual = empty($dataRequest['COMPANY']) && !empty($dataRequest['INDIVIDUAL']) ? true : false;
