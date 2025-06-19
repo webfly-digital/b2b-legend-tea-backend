@@ -365,6 +365,33 @@ class Buyer
     {
         $dataUserTo1C = $arFieldsUser; // массив отвечает за данные для 1с
         $dataRequest = $request->getPostList()->toArray(); //пост запрос с формы
+
+        $skip1C = false;
+        $guidUser = '';
+        $userId = (int)$arFieldsUser['USER_ID'];
+
+        // 1. Проверяем GUID в прилетевших данных
+        if (!empty($arFieldsUser['UF_CONTACT_GUID'])) {
+            $skip1C = true;
+            $guidUser = $arFieldsUser['UF_CONTACT_GUID'];
+        }
+
+        // 2. Если не найден — пробуем получить из базы
+        if (!$skip1C && $userId > 0) {
+            $userDb = \CUser::GetByID($userId);
+            if ($user = $userDb->Fetch()) {
+                if (!empty($user['UF_CONTACT_GUID'])) {
+                    $skip1C = true;
+                    $guidUser = $user['UF_CONTACT_GUID'];
+                }
+            }
+        }
+
+        // 3. Если всё ещё нет GUID — делаем задержку
+        if (!$skip1C) {
+            sleep(5);
+        }
+
         $individual = empty($dataRequest['COMPANY']) && !empty($dataRequest['INDIVIDUAL']) ? true : false;
 
         $objProfile = new Profile($individual);
@@ -391,12 +418,14 @@ class Buyer
         $objProfile->addPropsProfileBuyer();
         $objProfile->arrayTo1C($dataUserTo1C);
 
-        $res1C = \Webfly\Helper\User::uploadUserAndProfile($dataUserTo1C);
+        if (!$skip1C) {
+            $res1C = \Webfly\Helper\User::uploadUserAndProfile($dataUserTo1C);
 
             $guidProfile = self::getGuidFrom1C($res1C);
-        if ($guidProfile) $objProfile->updatePropCodeGuid($guidProfile);
+            if ($guidProfile) $objProfile->updatePropCodeGuid($guidProfile);
 
-        $guidUser = \Webfly\Helper\User::getGuidFrom1C($res1C);
+            $guidUser = \Webfly\Helper\User::getGuidFrom1C($res1C);
+        }
 
         \Webfly\Helper\User::updateFieldsProfileAndGuid($arFieldsUser['USER_ID'], $objProfile->idProfile, $guidUser, $arFieldsUser); //протягивает $arFields, чтобы заполнить его гуид, и прис оздании контактв передать данный гуид
     }
